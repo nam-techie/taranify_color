@@ -9,7 +9,8 @@ import TravelMap from './pages/TravelMap';
 import AboutPage from './pages/AboutPage';
 import AuthPage from './pages/AuthPage';
 import PricingPage from './pages/PricingPage';
-import ExpenseTracker from './pages/ExpenseTracker';
+import ProfilePage from './pages/ProfilePage';
+import MyPostsPage from './pages/MyPostsPage';
 
 function App() {
   return (
@@ -22,9 +23,13 @@ function App() {
             <Route path="/community" element={<CommunityForum />} />
             <Route path="/map" element={<TravelMap />} />
             <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/expenses" element={<ExpenseTracker />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/my-posts" element={<MyPostsPage />} />
+            <Route path="/favorites" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-white text-2xl">Trang Yêu Thích - Đang phát triển</h1></div>} />
+            <Route path="/notifications" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-white text-2xl">Trang Thông Báo - Đang phát triển</h1></div>} />
+            <Route path="/settings" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-white text-2xl">Trang Cài Đặt - Đang phát triển</h1></div>} />
           </Routes>
         </Layout>
       </Router>

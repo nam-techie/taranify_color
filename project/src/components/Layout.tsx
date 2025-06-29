@@ -88,7 +88,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Icon Only */}
             <div className="hidden lg:flex items-center space-x-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
