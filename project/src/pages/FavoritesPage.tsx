@@ -378,7 +378,6 @@ const FavoritesPage: React.FC = () => {
               >
                 Làm trắc nghiệm ngay
               </button>
-            </button>
             )}
           </div>
         )}
