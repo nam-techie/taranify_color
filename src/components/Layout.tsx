@@ -13,7 +13,6 @@ import {
   Crown,
   LogOut,
   Settings,
-  DollarSign,
   ChevronDown,
   UserCircle,
   FileText,
@@ -40,11 +39,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { path: '/pricing', label: 'Gói Dịch Vụ', icon: Crown },
     { path: '/about', label: 'Giới Thiệu', icon: Info },
   ];
-
-  // Add expense tracker for authenticated users
-  if (isAuthenticated) {
-    navItems.splice(4, 0, { path: '/expenses', label: 'Chi Tiêu', icon: DollarSign });
-  }
 
   const userMenuItems = [
     { 
