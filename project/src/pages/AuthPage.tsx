@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const AuthPage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [searchParams] = useSearchParams();
+  const initialMode = searchParams.get('mode') === 'register' ? false : true;
+  
+  const [isLogin, setIsLogin] = useState(initialMode);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,8 +21,18 @@ const AuthPage: React.FC = () => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
+  // Update mode when URL changes
+  useEffect(() => {
+    const mode = searchParams.get('mode');
+    if (mode === 'register') {
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, [searchParams]);
+
   // Redirect if already authenticated
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       navigate('/');
     }
@@ -52,15 +65,33 @@ const AuthPage: React.FC = () => {
           setError('Mật khẩu xác nhận không khớp');
           return;
         }
+        if (formData.password.length < 6) {
+          setError('Mật khẩu phải có ít nhất 6 ký tự');
+          return;
+        }
         // For demo, just show success message
         setError('Đăng ký thành công! Vui lòng đăng nhập.');
         setIsLogin(true);
+        setFormData({ ...formData, password: '', confirmPassword: '' });
       }
     } catch (err) {
       setError('Có lỗi xảy ra. Vui lòng thử lại.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const switchMode = () => {
+    setIsLogin(!isLogin);
+    setError('');
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+    // Update URL
+    navigate(isLogin ? '/auth?mode=register' : '/auth?mode=login', { replace: true });
   };
 
   return (
@@ -82,7 +113,7 @@ const AuthPage: React.FC = () => {
         </div>
 
         <div className="glass-card rounded-2xl p-8">
-          {/* Demo Account Info */}
+          {/* Demo Account Info - Only show for login */}
           {isLogin && (
             <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
               <div className="flex items-start space-x-2">
@@ -215,9 +246,10 @@ const AuthPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
             >
-              {loading ? 'Đang xử lý...' : (isLogin ? 'Đăng Nhập' : 'Đăng Ký')}
+              {isLogin ? <User size={18} /> : <UserPlus size={18} />}
+              <span>{loading ? 'Đang xử lý...' : (isLogin ? 'Đăng Nhập' : 'Đăng Ký')}</span>
             </button>
           </form>
 
@@ -256,7 +288,7 @@ const AuthPage: React.FC = () => {
               {isLogin ? 'Chưa có tài khoản?' : 'Đã có tài khoản?'}
             </span>
             <button
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={switchMode}
               className="ml-2 text-primary-400 hover:text-primary-300 font-medium"
             >
               {isLogin ? 'Đăng ký ngay' : 'Đăng nhập'}
@@ -265,7 +297,7 @@ const AuthPage: React.FC = () => {
         </div>
 
         <div className="text-center text-sm text-white/50">
-          Bằng việc đăng ký, bạn đồng ý với{' '}
+          Bằng việc {isLogin ? 'đăng nhập' : 'đăng ký'}, bạn đồng ý với{' '}
           <a href="#" className="text-primary-400 hover:text-primary-300">
             Điều khoản sử dụng
           </a>{' '}

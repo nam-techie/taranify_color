@@ -9,12 +9,21 @@ import {
   Filter,
   Search,
   Send,
-  ThumbsUp
+  ThumbsUp,
+  Crown,
+  Video,
+  FileText,
+  ChefHat,
+  Clock,
+  Users as UsersIcon,
+  X
 } from 'lucide-react';
 import { foodPosts } from '../data/mockData';
 import { FoodPost, Comment } from '../types';
+import { useAuth } from '../contexts/AuthContext';
 
 const CommunityForum: React.FC = () => {
+  const { user } = useAuth();
   const [posts, setPosts] = useState<FoodPost[]>(foodPosts);
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,6 +32,19 @@ const CommunityForum: React.FC = () => {
   const [newComment, setNewComment] = useState<{ [key: number]: string }>({});
   const [replyingTo, setReplyingTo] = useState<{ postId: number; commentId: number } | null>(null);
   const [newReply, setNewReply] = useState('');
+  const [postType, setPostType] = useState<'basic' | 'premium'>('basic');
+
+  // Premium post form data
+  const [premiumPostData, setPremiumPostData] = useState({
+    title: '',
+    description: '',
+    recipe: [''],
+    ingredients: [''],
+    cookingTime: '',
+    servings: '',
+    difficulty: 'easy',
+    videoUrl: ''
+  });
 
   const filters = [
     { value: 'all', label: 'Tất cả', color: 'primary' },
@@ -101,8 +123,8 @@ const CommunityForum: React.FC = () => {
 
     const comment: Comment = {
       id: Date.now(),
-      author: "Bạn",
-      authorAvatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face",
+      author: user?.name || "Bạn",
+      authorAvatar: user?.avatar || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face",
       content: newComment[postId],
       likes: 0,
       replies: [],
@@ -125,8 +147,8 @@ const CommunityForum: React.FC = () => {
 
     const reply = {
       id: Date.now(),
-      author: "Bạn",
-      authorAvatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face",
+      author: user?.name || "Bạn",
+      authorAvatar: user?.avatar || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face",
       content: newReply,
       likes: 0,
       createdAt: new Date().toISOString()
@@ -149,6 +171,48 @@ const CommunityForum: React.FC = () => {
 
     setNewReply('');
     setReplyingTo(null);
+  };
+
+  const addRecipeStep = () => {
+    setPremiumPostData(prev => ({
+      ...prev,
+      recipe: [...prev.recipe, '']
+    }));
+  };
+
+  const addIngredient = () => {
+    setPremiumPostData(prev => ({
+      ...prev,
+      ingredients: [...prev.ingredients, '']
+    }));
+  };
+
+  const updateRecipeStep = (index: number, value: string) => {
+    setPremiumPostData(prev => ({
+      ...prev,
+      recipe: prev.recipe.map((step, i) => i === index ? value : step)
+    }));
+  };
+
+  const updateIngredient = (index: number, value: string) => {
+    setPremiumPostData(prev => ({
+      ...prev,
+      ingredients: prev.ingredients.map((ingredient, i) => i === index ? value : ingredient)
+    }));
+  };
+
+  const removeRecipeStep = (index: number) => {
+    setPremiumPostData(prev => ({
+      ...prev,
+      recipe: prev.recipe.filter((_, i) => i !== index)
+    }));
+  };
+
+  const removeIngredient = (index: number) => {
+    setPremiumPostData(prev => ({
+      ...prev,
+      ingredients: prev.ingredients.filter((_, i) => i !== index)
+    }));
   };
 
   return (
@@ -219,7 +283,12 @@ const CommunityForum: React.FC = () => {
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div className="flex-1">
-                    <p className="font-semibold text-white">{post.author}</p>
+                    <div className="flex items-center space-x-2">
+                      <p className="font-semibold text-white">{post.author}</p>
+                      {user?.isPremium && (
+                        <Crown size={16} className="text-yellow-400" />
+                      )}
+                    </div>
                     <p className="text-sm text-white/60">
                       {new Date(post.createdAt).toLocaleDateString('vi-VN')}
                     </p>
@@ -242,6 +311,43 @@ const CommunityForum: React.FC = () => {
                 <p className="text-white/80 mb-4 leading-relaxed">
                   {post.description}
                 </p>
+
+                {/* Premium Content - Recipe & Ingredients */}
+                {user?.isPremium && post.recipe && post.ingredients && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                    <div className="glass rounded-lg p-4">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <ChefHat size={20} className="text-orange-400" />
+                        <h4 className="font-semibold text-white">Nguyên liệu</h4>
+                      </div>
+                      <ul className="space-y-1">
+                        {post.ingredients.map((ingredient, index) => (
+                          <li key={index} className="text-white/70 text-sm flex items-center space-x-2">
+                            <span className="w-1.5 h-1.5 bg-primary-400 rounded-full"></span>
+                            <span>{ingredient}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="glass rounded-lg p-4">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <FileText size={20} className="text-blue-400" />
+                        <h4 className="font-semibold text-white">Cách làm</h4>
+                      </div>
+                      <ol className="space-y-2">
+                        {post.recipe.map((step, index) => (
+                          <li key={index} className="text-white/70 text-sm flex space-x-2">
+                            <span className="bg-primary-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                              {index + 1}
+                            </span>
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Post Image */}
@@ -283,7 +389,7 @@ const CommunityForum: React.FC = () => {
                     {/* Add Comment */}
                     <div className="flex space-x-3 mb-4">
                       <img
-                        src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face"
+                        src={user?.avatar || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face"}
                         alt="You"
                         className="w-8 h-8 rounded-full object-cover"
                       />
@@ -421,15 +527,63 @@ const CommunityForum: React.FC = () => {
         {/* Create Post Modal */}
         {showCreatePost && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div className="glass-card rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="glass-card rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-white">Chia Sẻ Món Ăn</h2>
                 <button
                   onClick={() => setShowCreatePost(false)}
                   className="text-white/60 hover:text-white"
                 >
-                  ✕
+                  <X size={24} />
                 </button>
+              </div>
+
+              {/* Post Type Selection */}
+              <div className="mb-6">
+                <div className="flex items-center space-x-4 mb-4">
+                  <button
+                    onClick={() => setPostType('basic')}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                      postType === 'basic'
+                        ? 'bg-gradient-button text-white'
+                        : 'bg-white/10 text-white/70 hover:bg-white/20'
+                    }`}
+                  >
+                    <Camera size={20} />
+                    <span>Bài viết cơ bản</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setPostType('premium')}
+                    disabled={!user?.isPremium}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                      postType === 'premium' && user?.isPremium
+                        ? 'bg-gradient-button text-white'
+                        : user?.isPremium
+                        ? 'bg-white/10 text-white/70 hover:bg-white/20'
+                        : 'bg-white/5 text-white/40 cursor-not-allowed'
+                    }`}
+                  >
+                    <Crown size={20} />
+                    <span>Bài viết Premium</span>
+                    {!user?.isPremium && (
+                      <span className="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full">
+                        Premium
+                      </span>
+                    )}
+                  </button>
+                </div>
+
+                {postType === 'premium' && !user?.isPremium && (
+                  <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-4">
+                    <div className="flex items-center space-x-2">
+                      <Crown size={16} className="text-yellow-400" />
+                      <span className="text-yellow-300 text-sm font-medium">
+                        Tính năng Premium: Chia sẻ công thức nấu ăn chi tiết, video hướng dẫn và nhiều hơn nữa!
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <form className="space-y-6">
@@ -441,6 +595,8 @@ const CommunityForum: React.FC = () => {
                     type="text"
                     placeholder="Nhập tên món ăn..."
                     className="input-glass w-full"
+                    value={postType === 'premium' ? premiumPostData.title : ''}
+                    onChange={(e) => postType === 'premium' && setPremiumPostData(prev => ({ ...prev, title: e.target.value }))}
                   />
                 </div>
 
@@ -465,7 +621,161 @@ const CommunityForum: React.FC = () => {
                     rows={4}
                     placeholder="Chia sẻ cảm xúc, hương vị, kỷ niệm gắn liền với món ăn..."
                     className="input-glass w-full resize-none"
+                    value={postType === 'premium' ? premiumPostData.description : ''}
+                    onChange={(e) => postType === 'premium' && setPremiumPostData(prev => ({ ...prev, description: e.target.value }))}
                   ></textarea>
+                </div>
+
+                {/* Premium Features */}
+                {postType === 'premium' && user?.isPremium && (
+                  <>
+                    {/* Recipe Details */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          <Clock size={16} className="inline mr-1" />
+                          Thời gian nấu
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="30 phút"
+                          className="input-glass w-full"
+                          value={premiumPostData.cookingTime}
+                          onChange={(e) => setPremiumPostData(prev => ({ ...prev, cookingTime: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          <UsersIcon size={16} className="inline mr-1" />
+                          Số người ăn
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="4 người"
+                          className="input-glass w-full"
+                          value={premiumPostData.servings}
+                          onChange={(e) => setPremiumPostData(prev => ({ ...prev, servings: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">
+                          Độ khó
+                        </label>
+                        <select
+                          className="input-glass w-full"
+                          value={premiumPostData.difficulty}
+                          onChange={(e) => setPremiumPostData(prev => ({ ...prev, difficulty: e.target.value }))}
+                        >
+                          <option value="easy">Dễ</option>
+                          <option value="medium">Trung bình</option>
+                          <option value="hard">Khó</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Ingredients */}
+                    <div>
+                      <label className="block text-sm font-medium text-white mb-2">
+                        <ChefHat size={16} className="inline mr-1" />
+                        Nguyên liệu
+                      </label>
+                      <div className="space-y-2">
+                        {premiumPostData.ingredients.map((ingredient, index) => (
+                          <div key={index} className="flex space-x-2">
+                            <input
+                              type="text"
+                              placeholder={`Nguyên liệu ${index + 1}`}
+                              className="input-glass flex-1"
+                              value={ingredient}
+                              onChange={(e) => updateIngredient(index, e.target.value)}
+                            />
+                            {premiumPostData.ingredients.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeIngredient(index)}
+                                className="p-2 text-red-400 hover:text-red-300"
+                              >
+                                <X size={20} />
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={addIngredient}
+                          className="text-primary-400 hover:text-primary-300 text-sm"
+                        >
+                          + Thêm nguyên liệu
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Recipe Steps */}
+                    <div>
+                      <label className="block text-sm font-medium text-white mb-2">
+                        <FileText size={16} className="inline mr-1" />
+                        Cách làm
+                      </label>
+                      <div className="space-y-2">
+                        {premiumPostData.recipe.map((step, index) => (
+                          <div key={index} className="flex space-x-2">
+                            <span className="bg-primary-500 text-white text-sm w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              {index + 1}
+                            </span>
+                            <textarea
+                              rows={2}
+                              placeholder={`Bước ${index + 1}`}
+                              className="input-glass flex-1 resize-none"
+                              value={step}
+                              onChange={(e) => updateRecipeStep(index, e.target.value)}
+                            />
+                            {premiumPostData.recipe.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeRecipeStep(index)}
+                                className="p-2 text-red-400 hover:text-red-300"
+                              >
+                                <X size={20} />
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={addRecipeStep}
+                          className="text-primary-400 hover:text-primary-300 text-sm"
+                        >
+                          + Thêm bước
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Video URL */}
+                    <div>
+                      <label className="block text-sm font-medium text-white mb-2">
+                        <Video size={16} className="inline mr-1" />
+                        Video hướng dẫn (tùy chọn)
+                      </label>
+                      <input
+                        type="url"
+                        placeholder="https://youtube.com/watch?v=..."
+                        className="input-glass w-full"
+                        value={premiumPostData.videoUrl}
+                        onChange={(e) => setPremiumPostData(prev => ({ ...prev, videoUrl: e.target.value }))}
+                      />
+                    </div>
+                  </>
+                )}
+
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Tags
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Thêm tags (cách nhau bằng dấu phẩy)"
+                    className="input-glass w-full"
+                  />
                 </div>
 
                 <div className="flex justify-end space-x-4">
@@ -480,7 +790,7 @@ const CommunityForum: React.FC = () => {
                     type="submit"
                     className="btn-primary"
                   >
-                    Đăng Bài
+                    Đăng bài
                   </button>
                 </div>
               </form>

@@ -146,7 +146,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   />
                 </button>
                 
-                {/* Dropdown Menu */}
+                {/* Dropdown Menu - Sửa background để không trùng màu */}
                 {showUserMenu && (
                   <>
                     {/* Backdrop */}
@@ -155,10 +155,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       onClick={() => setShowUserMenu(false)}
                     ></div>
                     
-                    {/* Menu */}
-                    <div className="absolute right-0 top-full mt-2 w-80 glass-card rounded-xl py-2 z-50 shadow-2xl">
+                    {/* Menu - Sửa background và border để rõ ràng hơn */}
+                    <div className="absolute right-0 top-full mt-2 w-80 bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-xl py-2 z-50 shadow-2xl">
                       {/* User Info Header */}
-                      <div className="px-4 py-3 border-b border-white/10">
+                      <div className="px-4 py-3 border-b border-white/20">
                         <div className="flex items-center space-x-3">
                           <img
                             src={user.avatar}
@@ -167,7 +167,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                           />
                           <div className="flex-1">
                             <div className="text-white font-medium">{user.name}</div>
-                            <div className="text-white/60 text-sm">{user.email}</div>
+                            <div className="text-white/70 text-sm">{user.email}</div>
                             <div className="flex items-center space-x-1 mt-1">
                               {user.isPremium ? (
                                 <>
@@ -194,12 +194,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                               key={index}
                               to={item.path}
                               onClick={() => setShowUserMenu(false)}
-                              className="flex items-start space-x-3 px-4 py-3 text-white/80 hover:bg-white/10 hover:text-white transition-colors group"
+                              className="flex items-start space-x-3 px-4 py-3 text-white/90 hover:bg-white/10 hover:text-white transition-colors group"
                             >
                               <Icon size={18} className="mt-0.5 group-hover:text-primary-400 transition-colors" />
                               <div className="flex-1">
                                 <div className="font-medium">{item.label}</div>
-                                <div className="text-white/50 text-xs mt-0.5">{item.description}</div>
+                                <div className="text-white/60 text-xs mt-0.5">{item.description}</div>
                               </div>
                             </Link>
                           );
@@ -208,7 +208,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                       {/* Upgrade Section (for Free users) */}
                       {!user.isPremium && (
-                        <div className="border-t border-white/10 p-4">
+                        <div className="border-t border-white/20 p-4">
                           <Link
                             to="/pricing"
                             onClick={() => setShowUserMenu(false)}
@@ -221,13 +221,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       )}
 
                       {/* Logout */}
-                      <div className="border-t border-white/10 pt-2">
+                      <div className="border-t border-white/20 pt-2">
                         <button
                           onClick={() => {
                             logout();
                             setShowUserMenu(false);
                           }}
-                          className="w-full flex items-center space-x-3 px-4 py-3 text-white/80 hover:bg-red-500/20 hover:text-red-300 transition-colors"
+                          className="w-full flex items-center space-x-3 px-4 py-3 text-white/90 hover:bg-red-500/20 hover:text-red-300 transition-colors"
                         >
                           <LogOut size={18} />
                           <span>Đăng xuất</span>

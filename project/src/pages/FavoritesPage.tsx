@@ -258,7 +258,7 @@ const FavoritesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Controls */}
+        {/* Controls - Sửa layout để căn bằng */}
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
             <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40" />
@@ -271,28 +271,31 @@ const FavoritesPage: React.FC = () => {
             />
           </div>
           
-          <div className="flex items-center space-x-2 overflow-x-auto pb-2">
+          {/* Filter buttons - Căn bằng với bên phải */}
+          <div className="flex items-center justify-end space-x-2 overflow-x-auto pb-2">
             <Filter size={20} className="text-white/60 flex-shrink-0" />
-            {filters.map((filter) => {
-              const Icon = filter.icon;
-              return (
-                <button
-                  key={filter.value}
-                  onClick={() => setSelectedFilter(filter.value)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
-                    selectedFilter === filter.value
-                      ? 'bg-gradient-button text-white shadow-glow'
-                      : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
-                  }`}
-                >
-                  <Icon size={16} />
-                  <span>{filter.label}</span>
-                  <span className="bg-white/20 text-xs px-2 py-1 rounded-full">
-                    {filter.count}
-                  </span>
-                </button>
-              );
-            })}
+            <div className="flex space-x-2">
+              {filters.map((filter) => {
+                const Icon = filter.icon;
+                return (
+                  <button
+                    key={filter.value}
+                    onClick={() => setSelectedFilter(filter.value)}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
+                      selectedFilter === filter.value
+                        ? 'bg-gradient-button text-white shadow-glow'
+                        : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    <Icon size={16} />
+                    <span>{filter.label}</span>
+                    <span className="bg-white/20 text-xs px-2 py-1 rounded-full">
+                      {filter.count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -375,6 +378,7 @@ const FavoritesPage: React.FC = () => {
               >
                 Làm trắc nghiệm ngay
               </button>
+            </button>
             )}
           </div>
         )}
