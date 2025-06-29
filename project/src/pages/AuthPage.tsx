@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertCircle } from 'lucide-react';
+import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertCircle, ArrowLeft, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -9,8 +9,11 @@ const AuthPage: React.FC = () => {
   
   const [isLogin, setIsLogin] = useState(initialMode);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,12 +41,52 @@ const AuthPage: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string) => {
+    // Password must contain at least one letter and one number
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const minLength = password.length >= 6;
+    
+    return {
+      isValid: hasLetter && hasNumber && minLength,
+      hasLetter,
+      hasNumber,
+      minLength
+    };
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
     setError(''); // Clear error when user types
+  };
+
+  const handleOTPChange = (index: number, value: string) => {
+    if (value.length > 1) return; // Only allow single digit
+    
+    const newOTP = [...otpCode];
+    newOTP[index] = value;
+    setOtpCode(newOTP);
+
+    // Auto focus next input
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
+    }
+  };
+
+  const handleOTPKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Backspace' && !otpCode[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`);
+      prevInput?.focus();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,19 +103,32 @@ const AuthPage: React.FC = () => {
           setError('Email hoặc mật khẩu không đúng. Thử test@gmail.com / 123456');
         }
       } else {
-        // Handle registration logic here
+        // Validate email
+        if (!validateEmail(formData.email)) {
+          setError('Email không hợp lệ');
+          return;
+        }
+
+        // Validate password
+        const passwordValidation = validatePassword(formData.password);
+        if (!passwordValidation.isValid) {
+          if (!passwordValidation.minLength) {
+            setError('Mật khẩu phải có ít nhất 6 ký tự');
+          } else if (!passwordValidation.hasLetter) {
+            setError('Mật khẩu phải chứa ít nhất một chữ cái');
+          } else if (!passwordValidation.hasNumber) {
+            setError('Mật khẩu phải chứa ít nhất một số');
+          }
+          return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
           setError('Mật khẩu xác nhận không khớp');
           return;
         }
-        if (formData.password.length < 6) {
-          setError('Mật khẩu phải có ít nhất 6 ký tự');
-          return;
-        }
-        // For demo, just show success message
-        setError('Đăng ký thành công! Vui lòng đăng nhập.');
-        setIsLogin(true);
-        setFormData({ ...formData, password: '', confirmPassword: '' });
+
+        // Show OTP verification
+        setShowOTP(true);
       }
     } catch (err) {
       setError('Có lỗi xảy ra. Vui lòng thử lại.');
@@ -81,18 +137,142 @@ const AuthPage: React.FC = () => {
     }
   };
 
+  const handleOTPSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const otpString = otpCode.join('');
+    
+    if (otpString.length !== 6) {
+      setError('Vui lòng nhập đầy đủ mã OTP');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      // Simulate OTP verification
+      if (otpString === '123456') {
+        setError('Đăng ký thành công! Vui lòng đăng nhập.');
+        setShowOTP(false);
+        setIsLogin(true);
+        setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+        setOtpCode(['', '', '', '', '', '']);
+      } else {
+        setError('Mã OTP không đúng. Thử 123456');
+      }
+    } catch (err) {
+      setError('Có lỗi xảy ra khi xác thực OTP');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const switchMode = () => {
     setIsLogin(!isLogin);
     setError('');
+    setShowOTP(false);
     setFormData({
       name: '',
       email: '',
       password: '',
       confirmPassword: ''
     });
+    setOtpCode(['', '', '', '', '', '']);
     // Update URL
     navigate(isLogin ? '/auth?mode=register' : '/auth?mode=login', { replace: true });
   };
+
+  const resendOTP = () => {
+    setError('Mã OTP mới đã được gửi đến email của bạn');
+    setOtpCode(['', '', '', '', '', '']);
+  };
+
+  if (showOTP) {
+    return (
+      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-button rounded-full mb-6 shadow-glow">
+              <Shield size={32} className="text-white" />
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Xác Thực Email
+            </h2>
+            <p className="text-white/60 leading-relaxed">
+              Chúng tôi đã gửi mã xác thực 6 số đến email
+              <br />
+              <span className="text-primary-400 font-medium">{formData.email}</span>
+            </p>
+          </div>
+
+          <div className="glass-card rounded-2xl p-8">
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <AlertCircle size={16} className="text-red-400" />
+                  <span className="text-red-300 text-sm">{error}</span>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleOTPSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-white mb-4 text-center">
+                  Nhập mã xác thực
+                </label>
+                <div className="flex justify-center space-x-3">
+                  {otpCode.map((digit, index) => (
+                    <input
+                      key={index}
+                      id={`otp-${index}`}
+                      type="text"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleOTPChange(index, e.target.value)}
+                      onKeyDown={(e) => handleOTPKeyDown(index, e)}
+                      className="w-12 h-12 text-center text-xl font-bold bg-white/10 border border-white/20 text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    />
+                  ))}
+                </div>
+                <p className="text-white/50 text-xs text-center mt-3">
+                  Demo: Nhập <span className="text-primary-400 font-medium">123456</span>
+                </p>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Đang xác thực...' : 'Xác Thực'}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-white/60 text-sm mb-3">
+                Không nhận được mã?
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={resendOTP}
+                  className="text-primary-400 hover:text-primary-300 text-sm font-medium"
+                >
+                  Gửi lại mã
+                </button>
+                <button
+                  onClick={() => setShowOTP(false)}
+                  className="flex items-center justify-center space-x-1 text-white/60 hover:text-white text-sm"
+                >
+                  <ArrowLeft size={16} />
+                  <span>Quay lại</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -104,7 +284,7 @@ const AuthPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-white mb-2">
             {isLogin ? 'Chào mừng trở lại!' : 'Tham gia COLOR BITES'}
           </h2>
-          <p className="text-white/60">
+          <p className="text-white/60 leading-relaxed">
             {isLogin 
               ? 'Đăng nhập để khám phá thế giới ẩm thực đầy màu sắc' 
               : 'Tạo tài khoản để bắt đầu hành trình khám phá'
@@ -201,6 +381,11 @@ const AuthPage: React.FC = () => {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+              {!isLogin && (
+                <div className="mt-2 text-xs text-white/60">
+                  Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ và số
+                </div>
+              )}
             </div>
 
             {!isLogin && (
@@ -213,13 +398,20 @@ const AuthPage: React.FC = () => {
                   <input
                     id="confirmPassword"
                     name="confirmPassword"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     required={!isLogin}
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="input-glass w-full pl-10"
+                    className="input-glass w-full pl-10 pr-12"
                     placeholder="Nhập lại mật khẩu"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/40 hover:text-white/60"
+                  >
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
                 </div>
               </div>
             )}
@@ -296,13 +488,13 @@ const AuthPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-center text-sm text-white/50">
+        <div className="text-center text-sm text-white/50 leading-relaxed">
           Bằng việc {isLogin ? 'đăng nhập' : 'đăng ký'}, bạn đồng ý với{' '}
-          <a href="#" className="text-primary-400 hover:text-primary-300">
+          <a href="/about#terms" className="text-primary-400 hover:text-primary-300">
             Điều khoản sử dụng
           </a>{' '}
           và{' '}
-          <a href="#" className="text-primary-400 hover:text-primary-300">
+          <a href="/about#privacy" className="text-primary-400 hover:text-primary-300">
             Chính sách bảo mật
           </a>{' '}
           của COLOR BITES.

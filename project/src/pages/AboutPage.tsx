@@ -6,7 +6,14 @@ import {
   Target, 
   Lightbulb,
   Award,
-  MapPin
+  MapPin,
+  Shield,
+  FileText,
+  Lock,
+  Eye,
+  UserCheck,
+  AlertTriangle,
+  CheckCircle
 } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
@@ -72,8 +79,9 @@ const AboutPage: React.FC = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Về COLOR BITES
           </h1>
-          <p className="text-xl text-white/70 max-w-3xl mx-auto">
-            Kết nối cảm xúc với hương vị, tạo nên những trải nghiệm ẩm thực độc đáo qua lăng kính tâm lý học màu sắc
+          <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+            Kết nối cảm xúc với hương vị, tạo nên những trải nghiệm ẩm thực độc đáo 
+            qua lăng kính tâm lý học màu sắc
           </p>
         </div>
 
@@ -185,28 +193,189 @@ const AboutPage: React.FC = () => {
         </section>
 
         {/* Recognition Section */}
-        <section className="glass-card rounded-2xl p-8 md:p-12">
-          <div className="text-center">
-            <Award size={48} className="text-accent-400 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4">
-              Được công nhận bởi cộng đồng
-            </h2>
-            <p className="text-white/80 text-lg mb-8 max-w-3xl mx-auto">
-              COLOR BITES tự hào là nền tảng đầu tiên tại Việt Nam ứng dụng tâm lý học màu sắc 
-              vào ẩm thực, được đánh giá cao bởi các chuyên gia và người dùng.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary-400 mb-2">98%</div>
-                <div className="text-white/70">Người dùng hài lòng</div>
+        <section className="mb-16">
+          <div className="glass-card rounded-2xl p-8 md:p-12">
+            <div className="text-center">
+              <Award size={48} className="text-accent-400 mx-auto mb-6" />
+              <h2 className="text-3xl font-bold text-white mb-4">
+                Được công nhận bởi cộng đồng
+              </h2>
+              <p className="text-white/80 text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
+                COLOR BITES tự hào là nền tảng đầu tiên tại Việt Nam ứng dụng tâm lý học màu sắc 
+                vào ẩm thực, được đánh giá cao bởi các chuyên gia và người dùng.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-400 mb-2">98%</div>
+                  <div className="text-white/70">Người dùng hài lòng</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-accent-400 mb-2">4.8⭐</div>
+                  <div className="text-white/70">Đánh giá trung bình</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-400 mb-2">1,250+</div>
+                  <div className="text-white/70">Thành viên tích cực</div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-accent-400 mb-2">4.8⭐</div>
-                <div className="text-white/70">Đánh giá trung bình</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Terms of Service Section */}
+        <section id="terms" className="mb-16">
+          <div className="glass-card rounded-2xl p-8 md:p-12">
+            <div className="flex items-center space-x-3 mb-8">
+              <FileText size={32} className="text-blue-400" />
+              <h2 className="text-3xl font-bold text-white">Điều Khoản Sử Dụng</h2>
+            </div>
+
+            <div className="space-y-6 text-white/80 leading-relaxed">
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <CheckCircle size={20} className="text-green-400" />
+                  <span>1. Chấp nhận điều khoản</span>
+                </h3>
+                <p className="ml-7">
+                  Bằng việc truy cập và sử dụng COLOR BITES, bạn đồng ý tuân thủ các điều khoản và điều kiện 
+                  được quy định trong tài liệu này. Nếu bạn không đồng ý với bất kỳ điều khoản nào, 
+                  vui lòng không sử dụng dịch vụ của chúng tôi.
+                </p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary-400 mb-2">1,250+</div>
-                <div className="text-white/70">Thành viên tích cực</div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <UserCheck size={20} className="text-blue-400" />
+                  <span>2. Tài khoản người dùng</span>
+                </h3>
+                <ul className="ml-7 space-y-2">
+                  <li>• Bạn có trách nhiệm bảo mật thông tin đăng nhập của mình</li>
+                  <li>• Không được chia sẻ tài khoản với người khác</li>
+                  <li>• Thông tin đăng ký phải chính xác và đầy đủ</li>
+                  <li>• Thông báo ngay cho chúng tôi nếu phát hiện tài khoản bị xâm phạm</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <Heart size={20} className="text-red-400" />
+                  <span>3. Nội dung và cộng đồng</span>
+                </h3>
+                <ul className="ml-7 space-y-2">
+                  <li>• Nội dung chia sẻ phải phù hợp và không vi phạm pháp luật</li>
+                  <li>• Không đăng tải nội dung có tính chất spam, quảng cáo trái phép</li>
+                  <li>• Tôn trọng quyền sở hữu trí tuệ của người khác</li>
+                  <li>• Duy trì môi trường tích cực và thân thiện trong cộng đồng</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <AlertTriangle size={20} className="text-yellow-400" />
+                  <span>4. Hạn chế trách nhiệm</span>
+                </h3>
+                <p className="ml-7">
+                  COLOR BITES cung cấp dịch vụ "như hiện tại" và không đảm bảo tính chính xác tuyệt đối 
+                  của các gợi ý. Chúng tôi không chịu trách nhiệm về bất kỳ thiệt hại nào phát sinh 
+                  từ việc sử dụng dịch vụ.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <FileText size={20} className="text-purple-400" />
+                  <span>5. Thay đổi điều khoản</span>
+                </h3>
+                <p className="ml-7">
+                  Chúng tôi có quyền cập nhật các điều khoản này bất cứ lúc nào. Các thay đổi sẽ có hiệu lực 
+                  ngay khi được đăng tải trên website. Việc tiếp tục sử dụng dịch vụ đồng nghĩa với việc 
+                  bạn chấp nhận các điều khoản mới.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Privacy Policy Section */}
+        <section id="privacy" className="mb-16">
+          <div className="glass-card rounded-2xl p-8 md:p-12">
+            <div className="flex items-center space-x-3 mb-8">
+              <Shield size={32} className="text-green-400" />
+              <h2 className="text-3xl font-bold text-white">Chính Sách Bảo Mật</h2>
+            </div>
+
+            <div className="space-y-6 text-white/80 leading-relaxed">
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <Eye size={20} className="text-blue-400" />
+                  <span>1. Thu thập thông tin</span>
+                </h3>
+                <p className="ml-7">
+                  Chúng tôi thu thập thông tin bạn cung cấp khi đăng ký tài khoản, sử dụng dịch vụ, 
+                  và tương tác với cộng đồng. Bao gồm: email, tên hiển thị, sở thích ẩm thực, 
+                  và dữ liệu sử dụng ứng dụng.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <Lock size={20} className="text-yellow-400" />
+                  <span>2. Sử dụng thông tin</span>
+                </h3>
+                <ul className="ml-7 space-y-2">
+                  <li>• Cung cấp và cải thiện dịch vụ</li>
+                  <li>• Cá nhân hóa trải nghiệm người dùng</li>
+                  <li>• Gửi thông báo quan trọng về dịch vụ</li>
+                  <li>• Phân tích và nghiên cứu để phát triển sản phẩm</li>
+                  <li>• Đảm bảo an toàn và bảo mật</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <Shield size={20} className="text-green-400" />
+                  <span>3. Bảo vệ thông tin</span>
+                </h3>
+                <ul className="ml-7 space-y-2">
+                  <li>• Mã hóa dữ liệu nhạy cảm bằng SSL/TLS</li>
+                  <li>• Lưu trữ an toàn trên máy chủ được bảo mật</li>
+                  <li>• Kiểm soát truy cập nghiêm ngặt</li>
+                  <li>• Sao lưu dữ liệu định kỳ</li>
+                  <li>• Tuân thủ các tiêu chuẩn bảo mật quốc tế</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <Users size={20} className="text-purple-400" />
+                  <span>4. Chia sẻ thông tin</span>
+                </h3>
+                <p className="ml-7">
+                  Chúng tôi KHÔNG bán, cho thuê hoặc chia sẻ thông tin cá nhân của bạn với bên thứ ba 
+                  vì mục đích thương mại. Thông tin chỉ được chia sẻ trong các trường hợp: 
+                  có sự đồng ý của bạn, yêu cầu pháp lý, hoặc để bảo vệ quyền lợi hợp pháp.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3 flex items-center space-x-2">
+                  <FileText size={20} className="text-red-400" />
+                  <span>5. Quyền của người dùng</span>
+                </h3>
+                <ul className="ml-7 space-y-2">
+                  <li>• Truy cập và xem thông tin cá nhân</li>
+                  <li>• Yêu cầu chỉnh sửa thông tin không chính xác</li>
+                  <li>• Xóa tài khoản và dữ liệu liên quan</li>
+                  <li>• Từ chối nhận email marketing</li>
+                  <li>• Khiếu nại về việc xử lý dữ liệu</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mt-6">
+                <p className="text-blue-300 text-sm">
+                  <strong>Liên hệ:</strong> Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật, 
+                  vui lòng liên hệ với chúng tôi qua email: privacy@colorbites.vn
+                </p>
               </div>
             </div>
           </div>

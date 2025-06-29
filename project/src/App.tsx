@@ -12,6 +12,7 @@ import PricingPage from './pages/PricingPage';
 import ProfilePage from './pages/ProfilePage';
 import MyPostsPage from './pages/MyPostsPage';
 import FavoritesPage from './pages/FavoritesPage';
+import OTPVerificationPage from './pages/OTPVerificationPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/otp-verification" element={<OTPVerificationPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/my-posts" element={<MyPostsPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
