@@ -238,18 +238,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
               </div>
             ) : (
-              /* Sửa Auth Buttons để cân đối và đẹp hơn */
+              /* Sửa Auth Buttons để cân đối và đẹp hơn - FIXED */
               <div className="flex items-center space-x-3">
-                {/* Đăng Ký Button - Cải thiện UI */}
+                {/* Đăng Ký Button - Cải thiện UI để giống nhau */}
                 <Link
                   to="/auth?mode=register"
-                  className="hidden sm:flex items-center space-x-2 px-5 py-2.5 rounded-xl border-2 border-white/30 text-white/90 hover:bg-white/10 hover:text-white hover:border-white/50 transition-all duration-300 font-medium text-sm backdrop-blur-sm"
+                  className="hidden sm:flex items-center space-x-2 px-5 py-2.5 rounded-xl border-2 border-primary-500/50 text-white/90 hover:bg-primary-500/10 hover:text-white hover:border-primary-400 transition-all duration-300 font-medium text-sm backdrop-blur-sm hover:shadow-lg"
                 >
                   <UserPlus size={18} />
                   <span>Đăng Ký</span>
                 </Link>
 
-                {/* Đăng Nhập Button - Cải thiện UI */}
+                {/* Đăng Nhập Button - Cải thiện UI để giống nhau */}
                 <Link
                   to="/auth?mode=login"
                   className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 transition-all duration-300 font-medium text-sm shadow-lg hover:shadow-xl hover:scale-105"

@@ -16,7 +16,11 @@ import {
   ChefHat,
   Clock,
   Users as UsersIcon,
-  X
+  X,
+  Eye,
+  Star,
+  Play,
+  ExternalLink
 } from 'lucide-react';
 import { foodPosts } from '../data/mockData';
 import { FoodPost, Comment } from '../types';
@@ -33,6 +37,7 @@ const CommunityForum: React.FC = () => {
   const [replyingTo, setReplyingTo] = useState<{ postId: number; commentId: number } | null>(null);
   const [newReply, setNewReply] = useState('');
   const [postType, setPostType] = useState<'basic' | 'premium'>('basic');
+  const [selectedPost, setSelectedPost] = useState<FoodPost | null>(null);
 
   // Premium post form data
   const [premiumPostData, setPremiumPostData] = useState({
@@ -45,6 +50,14 @@ const CommunityForum: React.FC = () => {
     difficulty: 'easy',
     videoUrl: ''
   });
+
+  // Mock users with different membership types
+  const mockUsers = [
+    { id: 1, name: 'Mai Anh', isPremium: true, isTrialUser: false },
+    { id: 2, name: 'Thanh Tú', isPremium: false, isTrialUser: true },
+    { id: 3, name: 'Hoàng Long', isPremium: true, isTrialUser: false },
+    { id: 4, name: 'Linh Chi', isPremium: false, isTrialUser: true },
+  ];
 
   const filters = [
     { value: 'all', label: 'Tất cả', color: 'primary' },
@@ -215,6 +228,167 @@ const CommunityForum: React.FC = () => {
     }));
   };
 
+  const getUserBadge = (authorName: string) => {
+    const mockUser = mockUsers.find(u => u.name === authorName);
+    if (!mockUser) return null;
+
+    if (mockUser.isPremium) {
+      return <Crown size={16} className="text-yellow-400" title="Premium Member" />;
+    } else if (mockUser.isTrialUser) {
+      return <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">Trial</span>;
+    }
+    return null;
+  };
+
+  const canViewFullPost = (post: FoodPost, authorName: string) => {
+    const mockUser = mockUsers.find(u => u.name === authorName);
+    return mockUser?.isPremium || !post.recipe || !post.ingredients;
+  };
+
+  // Post Detail Modal
+  if (selectedPost) {
+    const authorUser = mockUsers.find(u => u.name === selectedPost.author);
+    const canViewFull = canViewFullPost(selectedPost, selectedPost.author);
+
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div className="glass-card rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="relative">
+            <img
+              src={selectedPost.image}
+              alt={selectedPost.title}
+              className="w-full h-64 object-cover rounded-t-2xl"
+            />
+            <button
+              onClick={() => setSelectedPost(null)}
+              className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm rounded-full p-2 hover:bg-black/70 transition-colors text-white"
+            >
+              <X size={20} />
+            </button>
+            <div className="absolute bottom-4 left-4 flex items-center space-x-2">
+              <img
+                src={selectedPost.authorAvatar}
+                alt={selectedPost.author}
+                className="w-12 h-12 rounded-full object-cover border-2 border-white/20"
+              />
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-white font-semibold">{selectedPost.author}</span>
+                  {getUserBadge(selectedPost.author)}
+                </div>
+                <span className="text-white/70 text-sm">
+                  {new Date(selectedPost.createdAt).toLocaleDateString('vi-VN')}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-8">
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex-1">
+                <h2 className="text-3xl font-bold text-white mb-4">
+                  {selectedPost.title}
+                </h2>
+                <p className="text-white/80 text-lg leading-relaxed mb-6">
+                  {selectedPost.description}
+                </p>
+                <div className="flex space-x-2 mb-6">
+                  {selectedPost.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-primary-500/20 text-primary-300 px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Premium Content - Recipe & Ingredients */}
+            {authorUser?.isPremium && selectedPost.recipe && selectedPost.ingredients && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div className="glass rounded-xl p-6">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <ChefHat size={24} className="text-orange-400" />
+                    <h3 className="text-xl font-bold text-white">Nguyên liệu</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {selectedPost.ingredients.map((ingredient, index) => (
+                      <li key={index} className="text-white/80 flex items-center space-x-3">
+                        <span className="w-2 h-2 bg-primary-400 rounded-full flex-shrink-0"></span>
+                        <span>{ingredient}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="glass rounded-xl p-6">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <FileText size={24} className="text-blue-400" />
+                    <h3 className="text-xl font-bold text-white">Cách làm</h3>
+                  </div>
+                  <ol className="space-y-4">
+                    {selectedPost.recipe.map((step, index) => (
+                      <li key={index} className="text-white/80 flex space-x-3">
+                        <span className="bg-primary-500 text-white text-sm w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 font-bold">
+                          {index + 1}
+                        </span>
+                        <span className="leading-relaxed">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            )}
+
+            {/* Trial User Limitation */}
+            {!canViewFull && (
+              <div className="glass rounded-xl p-6 mb-8 border border-yellow-500/30">
+                <div className="text-center">
+                  <Crown size={48} className="text-yellow-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-white mb-2">Nội dung Premium</h3>
+                  <p className="text-white/70 mb-4">
+                    Công thức chi tiết và video hướng dẫn chỉ dành cho thành viên Premium
+                  </p>
+                  <button
+                    onClick={() => window.location.href = '/pricing'}
+                    className="btn-primary"
+                  >
+                    Nâng cấp Premium
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex items-center justify-between border-t border-white/10 pt-6">
+              <div className="flex items-center space-x-6">
+                <button
+                  onClick={() => handleLike(selectedPost.id)}
+                  className="flex items-center space-x-2 text-primary-400 hover:text-primary-300 transition-colors"
+                >
+                  <Heart size={24} />
+                  <span className="font-medium">{selectedPost.likes}</span>
+                </button>
+                <button
+                  onClick={() => toggleComments(selectedPost.id)}
+                  className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors"
+                >
+                  <MessageCircle size={24} />
+                  <span className="font-medium">{selectedPost.comments.length}</span>
+                </button>
+              </div>
+              <button className="text-white/40 hover:text-white/60 transition-colors">
+                <Share2 size={24} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -271,243 +445,106 @@ const CommunityForum: React.FC = () => {
         </div>
 
         {/* Posts Grid */}
-        <div className="space-y-8">
-          {filteredPosts.map((post) => (
-            <div key={post.id} className="glass-card rounded-2xl overflow-hidden">
-              {/* Post Header */}
-              <div className="p-6">
-                <div className="flex items-center space-x-3 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPosts.map((post) => {
+            const authorUser = mockUsers.find(u => u.name === post.author);
+            return (
+              <div 
+                key={post.id} 
+                className="glass-card rounded-2xl overflow-hidden card-hover cursor-pointer"
+                onClick={() => setSelectedPost(post)}
+              >
+                {/* Post Image */}
+                <div className="relative">
                   <img
-                    src={post.authorAvatar}
-                    alt={post.author}
-                    className="w-12 h-12 rounded-full object-cover"
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-48 object-cover"
                   />
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2">
-                      <p className="font-semibold text-white">{post.author}</p>
-                      {user?.isPremium && (
-                        <Crown size={16} className="text-yellow-400" />
-                      )}
-                    </div>
-                    <p className="text-sm text-white/60">
-                      {new Date(post.createdAt).toLocaleDateString('vi-VN')}
-                    </p>
+                  <div className="absolute top-3 right-3">
+                    <Eye size={20} className="text-white/80" />
                   </div>
-                  <div className="flex space-x-2">
-                    {post.tags.map((tag, index) => (
+                </div>
+
+                {/* Post Content */}
+                <div className="p-4">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <img
+                      src={post.authorAvatar}
+                      alt={post.author}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div className="flex items-center space-x-2">
+                      <span className="font-medium text-white text-sm">{post.author}</span>
+                      {getUserBadge(post.author)}
+                    </div>
+                    <span className="text-white/50 text-xs">
+                      {new Date(post.createdAt).toLocaleDateString('vi-VN')}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-white/70 text-sm mb-3 line-clamp-2">
+                    {post.description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {post.tags.slice(0, 2).map((tag, index) => (
                       <span
                         key={index}
-                        className="bg-primary-500/20 text-primary-300 px-3 py-1 rounded-full text-sm font-medium"
+                        className="bg-primary-500/20 text-primary-300 px-2 py-1 rounded-full text-xs"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-                </div>
 
-                <h3 className="text-xl font-bold text-white mb-3">
-                  {post.title}
-                </h3>
-                <p className="text-white/80 mb-4 leading-relaxed">
-                  {post.description}
-                </p>
-
-                {/* Premium Content - Recipe & Ingredients */}
-                {user?.isPremium && post.recipe && post.ingredients && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                    <div className="glass rounded-lg p-4">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <ChefHat size={20} className="text-orange-400" />
-                        <h4 className="font-semibold text-white">Nguyên liệu</h4>
-                      </div>
-                      <ul className="space-y-1">
-                        {post.ingredients.map((ingredient, index) => (
-                          <li key={index} className="text-white/70 text-sm flex items-center space-x-2">
-                            <span className="w-1.5 h-1.5 bg-primary-400 rounded-full"></span>
-                            <span>{ingredient}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  {/* Premium Content Indicator */}
+                  {authorUser?.isPremium && post.recipe && (
+                    <div className="flex items-center space-x-2 mb-3">
+                      <ChefHat size={14} className="text-orange-400" />
+                      <span className="text-orange-300 text-xs">Có công thức chi tiết</span>
                     </div>
+                  )}
 
-                    <div className="glass rounded-lg p-4">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <FileText size={20} className="text-blue-400" />
-                        <h4 className="font-semibold text-white">Cách làm</h4>
-                      </div>
-                      <ol className="space-y-2">
-                        {post.recipe.map((step, index) => (
-                          <li key={index} className="text-white/70 text-sm flex space-x-2">
-                            <span className="bg-primary-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                              {index + 1}
-                            </span>
-                            <span>{step}</span>
-                          </li>
-                        ))}
-                      </ol>
+                  {/* Actions */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLike(post.id);
+                        }}
+                        className="flex items-center space-x-1 text-primary-400 hover:text-primary-300 transition-colors"
+                      >
+                        <Heart size={16} />
+                        <span className="text-sm">{post.likes}</span>
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleComments(post.id);
+                        }}
+                        className="flex items-center space-x-1 text-white/60 hover:text-white transition-colors"
+                      >
+                        <MessageCircle size={16} />
+                        <span className="text-sm">{post.comments.length}</span>
+                      </button>
                     </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Post Image */}
-              <div className="relative">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-64 md:h-80 object-cover"
-                />
-              </div>
-
-              {/* Post Actions */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-6">
                     <button
-                      onClick={() => handleLike(post.id)}
-                      className="flex items-center space-x-2 text-primary-400 hover:text-primary-300 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-white/40 hover:text-white/60 transition-colors"
                     >
-                      <Heart size={20} />
-                      <span className="font-medium">{post.likes}</span>
-                    </button>
-                    <button
-                      onClick={() => toggleComments(post.id)}
-                      className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors"
-                    >
-                      <MessageCircle size={20} />
-                      <span className="font-medium">{post.comments.length}</span>
+                      <Share2 size={16} />
                     </button>
                   </div>
-                  <button className="text-white/40 hover:text-white/60 transition-colors">
-                    <Share2 size={20} />
-                  </button>
                 </div>
-
-                {/* Comments Section */}
-                {expandedComments.includes(post.id) && (
-                  <div className="border-t border-white/10 pt-4">
-                    {/* Add Comment */}
-                    <div className="flex space-x-3 mb-4">
-                      <img
-                        src={user?.avatar || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face"}
-                        alt="You"
-                        className="w-8 h-8 rounded-full object-cover"
-                      />
-                      <div className="flex-1 flex space-x-2">
-                        <input
-                          type="text"
-                          placeholder="Viết bình luận..."
-                          value={newComment[post.id] || ''}
-                          onChange={(e) => setNewComment(prev => ({ ...prev, [post.id]: e.target.value }))}
-                          className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/60 rounded-full px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          onKeyPress={(e) => e.key === 'Enter' && handleAddComment(post.id)}
-                        />
-                        <button
-                          onClick={() => handleAddComment(post.id)}
-                          className="p-2 bg-gradient-button text-white rounded-full hover:shadow-glow transition-all"
-                        >
-                          <Send size={16} />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Comments List */}
-                    <div className="space-y-4">
-                      {post.comments.map((comment) => (
-                        <div key={comment.id} className="flex space-x-3">
-                          <img
-                            src={comment.authorAvatar}
-                            alt={comment.author}
-                            className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-                          />
-                          <div className="flex-1">
-                            <div className="bg-white/10 rounded-lg p-3">
-                              <div className="flex items-center space-x-2 mb-1">
-                                <span className="font-medium text-white">{comment.author}</span>
-                                <span className="text-xs text-white/50">
-                                  {new Date(comment.createdAt).toLocaleDateString('vi-VN')}
-                                </span>
-                              </div>
-                              <p className="text-white/80">{comment.content}</p>
-                            </div>
-                            
-                            <div className="flex items-center space-x-4 mt-2">
-                              <button
-                                onClick={() => handleCommentLike(post.id, comment.id)}
-                                className="flex items-center space-x-1 text-sm text-white/50 hover:text-primary-400 transition-colors"
-                              >
-                                <ThumbsUp size={14} />
-                                <span>{comment.likes}</span>
-                              </button>
-                              <button
-                                onClick={() => setReplyingTo({ postId: post.id, commentId: comment.id })}
-                                className="text-sm text-white/50 hover:text-primary-400 transition-colors"
-                              >
-                                Trả lời
-                              </button>
-                            </div>
-
-                            {/* Reply Input */}
-                            {replyingTo?.postId === post.id && replyingTo?.commentId === comment.id && (
-                              <div className="flex space-x-2 mt-3">
-                                <input
-                                  type="text"
-                                  placeholder="Viết phản hồi..."
-                                  value={newReply}
-                                  onChange={(e) => setNewReply(e.target.value)}
-                                  className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/60 rounded-full px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                                  onKeyPress={(e) => e.key === 'Enter' && handleAddReply(post.id, comment.id)}
-                                />
-                                <button
-                                  onClick={() => handleAddReply(post.id, comment.id)}
-                                  className="p-2 bg-gradient-button text-white rounded-full hover:shadow-glow transition-all"
-                                >
-                                  <Send size={14} />
-                                </button>
-                              </div>
-                            )}
-
-                            {/* Replies */}
-                            {comment.replies.length > 0 && (
-                              <div className="mt-3 space-y-3">
-                                {comment.replies.map((reply) => (
-                                  <div key={reply.id} className="flex space-x-3">
-                                    <img
-                                      src={reply.authorAvatar}
-                                      alt={reply.author}
-                                      className="w-6 h-6 rounded-full object-cover flex-shrink-0"
-                                    />
-                                    <div className="flex-1">
-                                      <div className="bg-white/5 rounded-lg p-2">
-                                        <div className="flex items-center space-x-2 mb-1">
-                                          <span className="font-medium text-white text-sm">{reply.author}</span>
-                                          <span className="text-xs text-white/50">
-                                            {new Date(reply.createdAt).toLocaleDateString('vi-VN')}
-                                          </span>
-                                        </div>
-                                        <p className="text-white/80 text-sm">{reply.content}</p>
-                                      </div>
-                                      <button
-                                        onClick={() => handleReplyLike(post.id, comment.id, reply.id)}
-                                        className="flex items-center space-x-1 text-xs text-white/50 hover:text-primary-400 transition-colors mt-1"
-                                      >
-                                        <ThumbsUp size={12} />
-                                        <span>{reply.likes}</span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {filteredPosts.length === 0 && (

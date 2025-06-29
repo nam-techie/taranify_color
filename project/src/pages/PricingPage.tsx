@@ -14,7 +14,15 @@ import {
   Sparkles,
   Shield,
   Headphones,
-  Gift
+  Gift,
+  Smartphone,
+  Palette,
+  BarChart3,
+  Video,
+  ChefHat,
+  Gamepad2,
+  Music,
+  BookOpen
 } from 'lucide-react';
 
 const PricingPage: React.FC = () => {
@@ -31,34 +39,36 @@ const PricingPage: React.FC = () => {
       features: [
         { name: 'Trắc nghiệm AI màu sắc', limit: '10 lần/tháng', included: true },
         { name: 'Gợi ý quán ăn theo giá', limit: '1 lần/tuần', included: true },
-        { name: 'Đăng bài cộng đồng', limit: 'Không giới hạn', included: true },
+        { name: 'Đăng bài cộng đồng cơ bản', limit: 'Không giới hạn', included: true },
         { name: 'Xem bài viết cộng đồng', limit: 'Không giới hạn', included: true },
         { name: 'Tìm kiếm quán ăn cơ bản', limit: 'Có', included: true },
         { name: 'Lưu quán ăn yêu thích', limit: '5 quán', included: true },
         { name: 'Premium Food Planner', limit: '', included: false },
         { name: 'Trắc nghiệm không giới hạn', limit: '', included: false },
         { name: 'AI gợi ý nâng cao', limit: '', included: false },
-        { name: 'Đánh giá chi tiết quán ăn', limit: '', included: false },
+        { name: 'Đăng công thức chi tiết', limit: '', included: false },
+        { name: 'Video hướng dẫn nấu ăn', limit: '', included: false },
         { name: 'Tính năng cộng đồng nâng cao', limit: '', included: false },
         { name: 'Hỗ trợ ưu tiên', limit: '', included: false }
       ]
     },
     {
       name: 'Premium',
-      price: { monthly: 36000, annual: 360000 },
-      description: 'Trải nghiệm đầy đủ với tính năng AI nâng cao',
+      price: { monthly: 36000, annual: 200000 },
+      description: 'Trải nghiệm đầy đủ với tính năng AI nâng cao và cộng đồng premium',
       icon: Crown,
       color: 'from-primary-500 to-accent-500',
       popular: true,
       features: [
         { name: 'Trắc nghiệm AI màu sắc', limit: 'Không giới hạn', included: true },
         { name: 'Gợi ý quán ăn theo giá', limit: 'Không giới hạn', included: true },
-        { name: 'Đăng bài cộng đồng', limit: 'Không giới hạn', included: true },
+        { name: 'Đăng bài cộng đồng premium', limit: 'Công thức + video', included: true },
         { name: 'Xem bài viết cộng đồng', limit: 'Không giới hạn', included: true },
-        { name: 'Tìm kiếm quán ăn nâng cao', limit: 'Có', included: true },
+        { name: 'Tìm kiếm quán ăn nâng cao', limit: 'AI-powered', included: true },
         { name: 'Lưu quán ăn yêu thích', limit: 'Không giới hạn', included: true },
         { name: 'Premium Food Planner', limit: 'AI lập kế hoạch ăn uống', included: true },
-        { name: 'Đánh giá chi tiết quán ăn', limit: 'Viết & xem đánh giá', included: true },
+        { name: 'Đăng công thức chi tiết', limit: 'Nguyên liệu + cách làm', included: true },
+        { name: 'Video hướng dẫn nấu ăn', limit: 'Upload & chia sẻ', included: true },
         { name: 'Tính năng cộng đồng nâng cao', limit: 'Stories, Live chat', included: true },
         { name: 'AI gợi ý cá nhân hóa', limit: 'Học từ sở thích', included: true },
         { name: 'Thống kê chi tiêu ẩm thực', limit: 'Báo cáo chi tiết', included: true },
@@ -74,6 +84,16 @@ const PricingPage: React.FC = () => {
       description: 'Thuật toán AI học từ sở thích và đưa ra gợi ý cá nhân hóa ngày càng chính xác'
     },
     {
+      icon: ChefHat,
+      title: 'Công Thức Chi Tiết',
+      description: 'Chia sẻ công thức nấu ăn đầy đủ với nguyên liệu, cách làm và tips bí mật'
+    },
+    {
+      icon: Video,
+      title: 'Video Hướng Dẫn',
+      description: 'Upload và chia sẻ video nấu ăn, tạo kênh ẩm thực cá nhân'
+    },
+    {
       icon: MapPin,
       title: 'Premium Food Planner',
       description: 'Lập kế hoạch ăn uống theo ngân sách, tối ưu tuyến đường và thời gian'
@@ -84,14 +104,34 @@ const PricingPage: React.FC = () => {
       description: 'Stories ẩm thực, Live chat với foodie, nhóm thảo luận riêng tư'
     },
     {
-      icon: Camera,
-      title: 'Review & Rating Pro',
-      description: 'Viết đánh giá chi tiết, upload nhiều ảnh, video review ngắn'
-    },
-    {
-      icon: Sparkles,
+      icon: BarChart3,
       title: 'Thống Kê Chi Tiêu',
       description: 'Theo dõi chi phí ăn uống, phân tích thói quen, đề xuất tiết kiệm'
+    },
+    {
+      icon: Smartphone,
+      title: 'Mobile App Premium',
+      description: 'Ứng dụng di động với tính năng offline, push notification thông minh'
+    },
+    {
+      icon: Palette,
+      title: 'Color Mood Tracker',
+      description: 'Theo dõi tâm trạng qua màu sắc, phân tích xu hướng cảm xúc theo thời gian'
+    },
+    {
+      icon: Gamepad2,
+      title: 'Gamification',
+      description: 'Hệ thống điểm thưởng, badges, challenges ẩm thực hàng tuần'
+    },
+    {
+      icon: Music,
+      title: 'Mood-Based Playlist',
+      description: 'Playlist nhạc phù hợp với tâm trạng và món ăn đang thưởng thức'
+    },
+    {
+      icon: BookOpen,
+      title: 'Recipe Collections',
+      description: 'Tạo bộ sưu tập công thức cá nhân, chia sẻ cookbook với cộng đồng'
     },
     {
       icon: Headphones,
@@ -112,14 +152,14 @@ const PricingPage: React.FC = () => {
       name: 'Thanh Tú',
       role: 'Sinh viên',
       avatar: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?w=100&h=100&fit=crop&crop=face',
-      content: 'AI gợi ý quá chính xác! Từ khi dùng Premium, mình tìm được rất nhiều quán ăn phù hợp với tâm trạng.',
+      content: 'Tính năng chia sẻ công thức với video hướng dẫn giúp mình học nấu ăn nhanh hơn rất nhiều!',
       rating: 5
     },
     {
       name: 'Hoàng Long',
       role: 'Nhân viên văn phòng',
       avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=100&h=100&fit=crop&crop=face',
-      content: 'Tính năng thống kê chi tiêu giúp mình quản lý ngân sách ăn uống hiệu quả hơn nhiều.',
+      content: 'Color Mood Tracker giúp mình hiểu rõ hơn về tâm trạng và chọn món ăn phù hợp mỗi ngày.',
       rating: 5
     }
   ];
@@ -140,6 +180,10 @@ const PricingPage: React.FC = () => {
     {
       question: 'Tôi có thể chuyển đổi giữa gói tháng và năm không?',
       answer: 'Có, bạn có thể chuyển đổi bất cứ lúc nào. Phí sẽ được tính theo tỷ lệ thời gian sử dụng.'
+    },
+    {
+      question: 'Mobile app có sẵn chưa?',
+      answer: 'Mobile app đang trong quá trình phát triển và sẽ ra mắt trong Q2 2025. Premium members sẽ được truy cập sớm.'
     }
   ];
 
@@ -156,6 +200,16 @@ const PricingPage: React.FC = () => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('vi-VN').format(price);
   };
+
+  const getAnnualSavings = () => {
+    const monthlyTotal = plans[1].price.monthly * 12;
+    const annualPrice = plans[1].price.annual;
+    const savings = monthlyTotal - annualPrice;
+    const percentage = Math.round((savings / monthlyTotal) * 100);
+    return { savings, percentage };
+  };
+
+  const annualSavings = getAnnualSavings();
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -194,10 +248,16 @@ const PricingPage: React.FC = () => {
             >
               Hàng năm
               <span className="absolute -top-2 -right-2 bg-accent-500 text-white text-xs px-2 py-1 rounded-full">
-                -17%
+                -{annualSavings.percentage}%
               </span>
             </button>
           </div>
+          
+          {isAnnual && (
+            <p className="text-green-400 text-sm mt-2">
+              Tiết kiệm {formatPrice(annualSavings.savings)}₫ khi thanh toán năm!
+            </p>
+          )}
         </div>
 
         {/* Comparison Table */}
@@ -224,7 +284,7 @@ const PricingPage: React.FC = () => {
                         </div>
                         <span className="text-white font-bold text-lg">Premium</span>
                         <span className="text-white/60 text-sm">
-                          {formatPrice(isAnnual ? 30000 : 36000)}₫/tháng
+                          {formatPrice(isAnnual ? Math.round(plans[1].price.annual / 12) : plans[1].price.monthly)}₫/tháng
                         </span>
                         <div className="mt-2">
                           <span className="bg-primary-500 text-white px-2 py-1 rounded-full text-xs">
@@ -239,12 +299,17 @@ const PricingPage: React.FC = () => {
                   {[
                     { feature: 'Trắc nghiệm AI màu sắc', free: '10 lần/tháng', premium: 'Không giới hạn' },
                     { feature: 'Gợi ý quán ăn theo giá', free: '1 lần/tuần', premium: 'Không giới hạn' },
-                    { feature: 'Đăng bài cộng đồng', free: 'Không giới hạn', premium: 'Không giới hạn' },
+                    { feature: 'Đăng bài cộng đồng', free: 'Cơ bản (ảnh + text)', premium: 'Premium (công thức + video)' },
                     { feature: 'Lưu quán ăn yêu thích', free: '5 quán', premium: 'Không giới hạn' },
                     { feature: 'Premium Food Planner', free: false, premium: true },
                     { feature: 'AI gợi ý cá nhân hóa', free: false, premium: true },
-                    { feature: 'Đánh giá chi tiết quán ăn', free: false, premium: true },
-                    { feature: 'Tính năng cộng đồng nâng cao', free: false, premium: true },
+                    { feature: 'Chia sẻ công thức chi tiết', free: false, premium: true },
+                    { feature: 'Video hướng dẫn nấu ăn', free: false, premium: true },
+                    { feature: 'Color Mood Tracker', free: false, premium: true },
+                    { feature: 'Mobile App Premium', free: false, premium: true },
+                    { feature: 'Gamification & Rewards', free: false, premium: true },
+                    { feature: 'Mood-Based Playlist', free: false, premium: true },
+                    { feature: 'Recipe Collections', free: false, premium: true },
                     { feature: 'Thống kê chi tiêu ẩm thực', free: false, premium: true },
                     { feature: 'Hỗ trợ ưu tiên 24/7', free: false, premium: true }
                   ].map((row, index) => (
@@ -286,7 +351,14 @@ const PricingPage: React.FC = () => {
                 </button>
                 <button className="btn-primary w-full flex items-center justify-center space-x-2">
                   <Crown size={20} />
-                  <span>Dùng thử Premium 7 ngày</span>
+                  <span>
+                    Dùng thử Premium 7 ngày
+                    {isAnnual && (
+                      <span className="block text-xs opacity-80">
+                        Chỉ {formatPrice(Math.round(plans[1].price.annual / 12))}₫/tháng
+                      </span>
+                    )}
+                  </span>
                 </button>
               </div>
             </div>
@@ -389,7 +461,14 @@ const PricingPage: React.FC = () => {
               </button>
               <button className="btn-primary flex items-center space-x-2">
                 <Crown size={20} />
-                <span>Dùng thử Premium 7 ngày</span>
+                <span>
+                  Dùng thử Premium 7 ngày
+                  {isAnnual && (
+                    <span className="block text-xs opacity-80">
+                      Tiết kiệm {annualSavings.percentage}% với gói năm
+                    </span>
+                  )}
+                </span>
               </button>
             </div>
             <p className="text-white/50 text-sm mt-4">
