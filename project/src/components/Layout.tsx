@@ -18,7 +18,8 @@ import {
   FileText,
   Heart,
   Bell,
-  Shield
+  Shield,
+  UserPlus
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -88,7 +89,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </span>
             </Link>
 
-            {/* Desktop Navigation - Icon Only */}
+            {/* Desktop Navigation - Icon Only với UI cải thiện */}
             <div className="hidden lg:flex items-center space-x-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -97,28 +98,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`group relative flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-200 ${
+                    className={`group relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 ${
                       isActive
-                        ? 'bg-gradient-button text-white shadow-glow'
-                        : 'text-white/80 hover:bg-white/10 hover:text-white'
+                        ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30 scale-105'
+                        : 'text-white/70 hover:bg-white/15 hover:text-white hover:scale-105 hover:shadow-lg'
                     }`}
                     title={item.label}
                   >
-                    <Icon size={20} />
+                    <Icon size={20} className={isActive ? 'drop-shadow-sm' : ''} />
                     
-                    {/* Tooltip */}
-                    <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                      <div className="bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                    {/* Tooltip cải thiện */}
+                    <div className="absolute bottom-full mb-3 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
+                      <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-xl border border-white/10">
                         {item.label}
                       </div>
-                      <div className="w-2 h-2 bg-black/80 transform rotate-45 mx-auto -mt-1"></div>
+                      <div className="w-2 h-2 bg-gray-900/95 transform rotate-45 mx-auto -mt-1 border-r border-b border-white/10"></div>
                     </div>
                   </Link>
                 );
               })}
             </div>
 
-            {/* User Menu */}
+            {/* Auth Buttons */}
             {isAuthenticated && user ? (
               <div className="relative">
                 <button 
@@ -237,20 +238,32 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
               </div>
             ) : (
-              <Link
-                to="/auth"
-                className="btn-primary flex items-center space-x-2"
-              >
-                <User size={18} />
-                <span className="text-sm font-medium">Đăng Nhập</span>
-              </Link>
+              <div className="flex items-center space-x-3">
+                {/* Đăng Ký Button */}
+                <Link
+                  to="/auth?mode=register"
+                  className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg border border-white/20 text-white/80 hover:bg-white/10 hover:text-white hover:border-white/40 transition-all duration-200"
+                >
+                  <UserPlus size={18} />
+                  <span className="text-sm font-medium">Đăng Ký</span>
+                </Link>
+
+                {/* Đăng Nhập Button */}
+                <Link
+                  to="/auth?mode=login"
+                  className="btn-primary flex items-center space-x-2"
+                >
+                  <User size={18} />
+                  <span className="text-sm font-medium">Đăng Nhập</span>
+                </Link>
+              </div>
             )}
           </div>
         </nav>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation với UI cải thiện */}
         <div className="lg:hidden border-t border-white/10">
-          <div className="grid grid-cols-3 gap-1 py-2">
+          <div className="grid grid-cols-3 gap-1 py-2 px-2">
             {navItems.slice(0, 6).map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -258,14 +271,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex flex-col items-center px-2 py-2 rounded-lg transition-all duration-200 ${
+                  className={`flex flex-col items-center px-2 py-3 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? 'text-primary-400'
-                      : 'text-white/60 hover:text-white'
+                      ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg scale-105'
+                      : 'text-white/60 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <Icon size={18} />
-                  <span className="text-xs font-medium mt-1 text-center leading-tight">
+                  <Icon size={20} className="mb-1" />
+                  <span className="text-xs font-medium text-center leading-tight">
                     {item.label.split(' ')[0]}
                   </span>
                 </Link>

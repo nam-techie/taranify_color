@@ -11,6 +11,7 @@ import AuthPage from './pages/AuthPage';
 import PricingPage from './pages/PricingPage';
 import ProfilePage from './pages/ProfilePage';
 import MyPostsPage from './pages/MyPostsPage';
+import FavoritesPage from './pages/FavoritesPage';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/my-posts" element={<MyPostsPage />} />
-            <Route path="/favorites" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-white text-2xl">Trang Yêu Thích - Đang phát triển</h1></div>} />
+            <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/notifications" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-white text-2xl">Trang Thông Báo - Đang phát triển</h1></div>} />
             <Route path="/settings" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-white text-2xl">Trang Cài Đặt - Đang phát triển</h1></div>} />
           </Routes>

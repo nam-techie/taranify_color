@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Brain, RefreshCw, Share2, CheckCircle, ArrowRight, Play, ExternalLink, ShoppingCart, Navigation, ArrowLeft, Music, Film, Tv, BookOpen, Utensils, BarChart3, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { Brain, RefreshCw, Share2, CheckCircle, ArrowRight, Play, ExternalLink, ShoppingCart, Navigation, ArrowLeft, Music, Film, Tv, BookOpen, Utensils, BarChart3, ChevronLeft, ChevronRight, Sparkles, Heart, Plus } from 'lucide-react';
 
 interface QuizType {
   id: string;
@@ -38,6 +38,7 @@ const ColorPsychologyQuiz: React.FC = () => {
   const [showResult, setShowResult] = useState(false);
   const [result, setResult] = useState<QuizResult | null>(null);
   const [currentResultIndex, setCurrentResultIndex] = useState(0);
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
   const quizTypes: QuizType[] = [
     {
@@ -588,6 +589,16 @@ const ColorPsychologyQuiz: React.FC = () => {
     window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
   };
 
+  const toggleFavorite = (itemId: string) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(itemId)) {
+      newFavorites.delete(itemId);
+    } else {
+      newFavorites.add(itemId);
+    }
+    setFavorites(newFavorites);
+  };
+
   const getResultTitle = () => {
     if (!selectedQuizType) return '';
     
@@ -761,13 +772,27 @@ const ColorPsychologyQuiz: React.FC = () => {
               <div className="glass-card rounded-xl overflow-hidden">
                 {(() => {
                   const item = result.content[currentResultIndex];
+                  const itemId = `${selectedQuizType}-${currentResultIndex}`;
+                  const isFavorited = favorites.has(itemId);
                   
                   if (selectedQuizType === 'food') {
                     return (
                       <div className="bg-gradient-to-br from-orange-900/40 to-red-900/40 p-8">
-                        <div className="text-center mb-6">
-                          <h3 className="text-3xl font-bold text-white mb-2">{item.name}</h3>
-                          <p className="text-white/80 text-lg">{item.cuisine} • {item.matchPercentage} mood match</p>
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="text-center flex-1">
+                            <h3 className="text-3xl font-bold text-white mb-2">{item.name}</h3>
+                            <p className="text-white/80 text-lg">{item.cuisine} • {item.matchPercentage} mood match</p>
+                          </div>
+                          <button
+                            onClick={() => toggleFavorite(itemId)}
+                            className={`p-3 rounded-full transition-all ${
+                              isFavorited 
+                                ? 'bg-red-500 text-white shadow-lg' 
+                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-red-400'
+                            }`}
+                          >
+                            <Heart size={20} className={isFavorited ? 'fill-current' : ''} />
+                          </button>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4 mb-6">
@@ -829,10 +854,22 @@ const ColorPsychologyQuiz: React.FC = () => {
                           alt={item.title}
                           className="w-full h-96 object-cover"
                         />
-                        <div className="absolute top-4 right-4">
+                        <div className="absolute top-4 left-4">
                           <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold">
                             {item.matchPercentage} match
                           </span>
+                        </div>
+                        <div className="absolute top-4 right-4">
+                          <button
+                            onClick={() => toggleFavorite(itemId)}
+                            className={`p-3 rounded-full transition-all ${
+                              isFavorited 
+                                ? 'bg-red-500 text-white shadow-lg' 
+                                : 'bg-black/60 backdrop-blur-sm text-white/60 hover:bg-red-500/60 hover:text-white'
+                            }`}
+                          >
+                            <Heart size={20} className={isFavorited ? 'fill-current' : ''} />
+                          </button>
                         </div>
                         <div className="p-8">
                           <h3 className="text-3xl font-bold text-white mb-2">{item.title}</h3>
@@ -867,10 +904,22 @@ const ColorPsychologyQuiz: React.FC = () => {
                           alt={item.title}
                           className="w-full h-96 object-cover"
                         />
-                        <div className="absolute top-4 right-4">
+                        <div className="absolute top-4 left-4">
                           <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                             {item.matchPercentage} match
                           </span>
+                        </div>
+                        <div className="absolute top-4 right-4">
+                          <button
+                            onClick={() => toggleFavorite(itemId)}
+                            className={`p-3 rounded-full transition-all ${
+                              isFavorited 
+                                ? 'bg-red-500 text-white shadow-lg' 
+                                : 'bg-black/60 backdrop-blur-sm text-white/60 hover:bg-red-500/60 hover:text-white'
+                            }`}
+                          >
+                            <Heart size={20} className={isFavorited ? 'fill-current' : ''} />
+                          </button>
                         </div>
                         <div className="p-8">
                           <h3 className="text-3xl font-bold text-white mb-2">{item.title}</h3>
@@ -904,10 +953,22 @@ const ColorPsychologyQuiz: React.FC = () => {
                   if (selectedQuizType === 'music') {
                     return (
                       <div className="p-8 text-center">
-                        <div className="mb-6">
-                          <span className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
-                            {item.matchPercentage} match
-                          </span>
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex-1">
+                            <span className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                              {item.matchPercentage} match
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => toggleFavorite(itemId)}
+                            className={`p-3 rounded-full transition-all ${
+                              isFavorited 
+                                ? 'bg-red-500 text-white shadow-lg' 
+                                : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-red-400'
+                            }`}
+                          >
+                            <Heart size={20} className={isFavorited ? 'fill-current' : ''} />
+                          </button>
                         </div>
                         <img
                           src={item.image}
@@ -938,10 +999,20 @@ const ColorPsychologyQuiz: React.FC = () => {
                             className="w-full md:w-48 h-64 rounded-lg object-cover mx-auto md:mx-0"
                           />
                           <div className="flex-1">
-                            <div className="mb-4">
+                            <div className="flex items-center justify-between mb-4">
                               <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                                 {item.matchPercentage} match
                               </span>
+                              <button
+                                onClick={() => toggleFavorite(itemId)}
+                                className={`p-3 rounded-full transition-all ${
+                                  isFavorited 
+                                    ? 'bg-red-500 text-white shadow-lg' 
+                                    : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-red-400'
+                                }`}
+                              >
+                                <Heart size={20} className={isFavorited ? 'fill-current' : ''} />
+                              </button>
                             </div>
                             <h3 className="text-3xl font-bold text-white mb-2">{item.title}</h3>
                             <p className="text-white/60 text-lg mb-2">{item.author}</p>
@@ -976,14 +1047,26 @@ const ColorPsychologyQuiz: React.FC = () => {
                           className="w-full md:w-48 h-64 rounded-lg object-cover"
                         />
                         <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-4">
-                            <span className="bg-primary-500/20 text-primary-300 px-3 py-1 rounded-full text-sm font-medium capitalize">
-                              {item.type}
-                            </span>
-                            <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold">
-                              {item.matchPercentage} match
-                            </span>
-                            <span className="text-yellow-400 text-sm">⭐ {item.rating}</span>
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-2">
+                              <span className="bg-primary-500/20 text-primary-300 px-3 py-1 rounded-full text-sm font-medium capitalize">
+                                {item.type}
+                              </span>
+                              <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold">
+                                {item.matchPercentage} match
+                              </span>
+                              <span className="text-yellow-400 text-sm">⭐ {item.rating}</span>
+                            </div>
+                            <button
+                              onClick={() => toggleFavorite(itemId)}
+                              className={`p-3 rounded-full transition-all ${
+                                isFavorited 
+                                  ? 'bg-red-500 text-white shadow-lg' 
+                                  : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-red-400'
+                              }`}
+                            >
+                              <Heart size={20} className={isFavorited ? 'fill-current' : ''} />
+                            </button>
                           </div>
                           <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
                           <p className="text-white/60 mb-3">{item.subtitle}</p>
@@ -1058,6 +1141,13 @@ const ColorPsychologyQuiz: React.FC = () => {
               >
                 <Sparkles size={20} />
                 <span>New Recommendations</span>
+              </button>
+              <button
+                onClick={() => window.location.href = '/favorites'}
+                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-colors"
+              >
+                <Heart size={20} />
+                <span>View Favorites ({favorites.size})</span>
               </button>
             </div>
           </div>
