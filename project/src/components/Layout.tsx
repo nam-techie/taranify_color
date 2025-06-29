@@ -89,7 +89,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </span>
             </Link>
 
-            {/* Desktop Navigation - Icon Only với UI cải thiện */}
+            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -107,7 +107,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   >
                     <Icon size={20} className={isActive ? 'drop-shadow-sm' : ''} />
                     
-                    {/* Tooltip cải thiện */}
+                    {/* Tooltip */}
                     <div className="absolute bottom-full mb-3 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
                       <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-xl border border-white/10">
                         {item.label}
@@ -119,7 +119,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               })}
             </div>
 
-            {/* Auth Buttons */}
+            {/* Auth Buttons - Sửa để cân đối và đẹp hơn */}
             {isAuthenticated && user ? (
               <div className="relative">
                 <button 
@@ -146,7 +146,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   />
                 </button>
                 
-                {/* Dropdown Menu - Sửa background để không trùng màu */}
+                {/* Dropdown Menu */}
                 {showUserMenu && (
                   <>
                     {/* Backdrop */}
@@ -155,7 +155,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       onClick={() => setShowUserMenu(false)}
                     ></div>
                     
-                    {/* Menu - Sửa background và border để rõ ràng hơn */}
+                    {/* Menu */}
                     <div className="absolute right-0 top-full mt-2 w-80 bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-xl py-2 z-50 shadow-2xl">
                       {/* User Info Header */}
                       <div className="px-4 py-3 border-b border-white/20">
@@ -238,30 +238,31 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
               </div>
             ) : (
+              /* Sửa Auth Buttons để cân đối và đẹp hơn */
               <div className="flex items-center space-x-3">
-                {/* Đăng Ký Button */}
+                {/* Đăng Ký Button - Cải thiện UI */}
                 <Link
                   to="/auth?mode=register"
-                  className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg border border-white/20 text-white/80 hover:bg-white/10 hover:text-white hover:border-white/40 transition-all duration-200"
+                  className="hidden sm:flex items-center space-x-2 px-5 py-2.5 rounded-xl border-2 border-white/30 text-white/90 hover:bg-white/10 hover:text-white hover:border-white/50 transition-all duration-300 font-medium text-sm backdrop-blur-sm"
                 >
                   <UserPlus size={18} />
-                  <span className="text-sm font-medium">Đăng Ký</span>
+                  <span>Đăng Ký</span>
                 </Link>
 
-                {/* Đăng Nhập Button */}
+                {/* Đăng Nhập Button - Cải thiện UI */}
                 <Link
                   to="/auth?mode=login"
-                  className="btn-primary flex items-center space-x-2"
+                  className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 transition-all duration-300 font-medium text-sm shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   <User size={18} />
-                  <span className="text-sm font-medium">Đăng Nhập</span>
+                  <span>Đăng Nhập</span>
                 </Link>
               </div>
             )}
           </div>
         </nav>
 
-        {/* Mobile Navigation với UI cải thiện */}
+        {/* Mobile Navigation */}
         <div className="lg:hidden border-t border-white/10">
           <div className="grid grid-cols-3 gap-1 py-2 px-2">
             {navItems.slice(0, 6).map((item) => {
@@ -304,7 +305,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
                 <span className="text-2xl font-bold text-gradient">COLOR BITES</span>
               </div>
-              <p className="text-white/70 mb-4 max-w-md">
+              <p className="text-white/70 mb-4 max-w-md leading-relaxed">
                 Khám phá thế giới ẩm thực qua lăng kính tâm lý học màu sắc. 
                 Kết nối cảm xúc với hương vị tại Thủ Đức, TP.HCM.
               </p>
@@ -323,7 +324,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             <div>
               <h3 className="text-lg font-semibold mb-4 text-white">Khám Phá</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 <li><Link to="/quiz" className="text-white/70 hover:text-primary-400 transition-colors">Trắc nghiệm màu sắc</Link></li>
                 <li><Link to="/community" className="text-white/70 hover:text-primary-400 transition-colors">Cộng đồng</Link></li>
                 <li><Link to="/map" className="text-white/70 hover:text-primary-400 transition-colors">Bản đồ ẩm thực</Link></li>
@@ -334,18 +335,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             <div>
               <h3 className="text-lg font-semibold mb-4 text-white">Hỗ Trợ</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 <li><a href="#" className="text-white/70 hover:text-primary-400 transition-colors">Liên hệ</a></li>
-                <li><a href="#" className="text-white/70 hover:text-primary-400 transition-colors">Chính sách bảo mật</a></li>
-                <li><a href="#" className="text-white/70 hover:text-primary-400 transition-colors">Điều khoản sử dụng</a></li>
+                <li><Link to="/about#privacy" className="text-white/70 hover:text-primary-400 transition-colors">Chính sách bảo mật</Link></li>
+                <li><Link to="/about#terms" className="text-white/70 hover:text-primary-400 transition-colors">Điều khoản sử dụng</Link></li>
                 <li><a href="#" className="text-white/70 hover:text-primary-400 transition-colors">FAQ</a></li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-white/10 mt-8 pt-8 text-center">
-            <p className="text-white/60">
-              © 2024 COLOR BITES. Tất cả quyền được bảo lưu. Made with ❤️ in Thủ Đức, TP.HCM
+            <p className="text-white/60 leading-relaxed">
+              © 2024 COLOR BITES. Tất cả quyền được bảo lưu. 
+              <br className="sm:hidden" />
+              Made with ❤️ in Thủ Đức, TP.HCM
             </p>
           </div>
         </div>
