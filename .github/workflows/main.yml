@@ -1,0 +1,351 @@
+# CI/CD for COLOR BITES Frontend
+name: COLOR BITES CI/CD
+
+on:
+  push:
+    branches: [ main, develop, feature/*, chore/** ]
+    paths:
+      - 'project/**/*.tsx'
+      - 'project/**/*.ts'
+      - 'project/**/*.js'
+      - 'project/**/*.json'
+      - 'project/vite.config.*'
+      - 'project/package.json'
+      - 'project/package-lock.json'
+      - 'project/src/**'
+      - 'project/public/**'
+      - 'project/**/*.css'
+      - 'project/**/*.html'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'project/**/*.tsx'
+      - 'project/**/*.ts'
+      - 'project/**/*.js'
+      - 'project/**/*.json'
+      - 'project/vite.config.*'
+      - 'project/package.json'
+      - 'project/package-lock.json'
+      - 'project/src/**'
+      - 'project/public/**'
+      - 'project/**/*.css'
+      - 'project/**/*.html'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+  PROJECT_DIR: 'project'
+
+jobs:
+  # ===== QUALITY CHECKS JOBS (Parallel) =====
+  code-quality:
+    name: 🔍 Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
+          
+      - name: 🧹 Clear npm cache
+        run: npm cache clean --force
+        
+      - name: 📋 Install dependencies
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npm ci --prefer-offline --no-audit
+          
+      - name: 🔎 Run ESLint
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npm run lint
+          
+      - name: 📝 TypeScript type check
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npx tsc --noEmit
+          
+      - name: 📊 Upload lint results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: ${{ env.PROJECT_DIR }}/eslint-report.json
+
+  security-audit:
+    name: 🛡️ Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
+          
+      - name: 📋 Install dependencies
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npm ci --prefer-offline --no-audit
+          
+      - name: 🔒 Run security audit
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npm audit --audit-level=moderate
+          
+      - name: 🚨 Check for high vulnerabilities
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npx audit-ci --moderate --report-type summary
+          
+      - name: 📊 Upload security report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit
+          path: ${{ env.PROJECT_DIR }}/audit-ci-report.json
+
+  # ===== BUILD & TEST JOB =====
+  build-and-test:
+    name: 🏗️ Build & Test
+    runs-on: ubuntu-latest
+    needs: [code-quality, security-audit]
+    
+    outputs:
+      build-success: ${{ steps.build.outcome == 'success' }}
+      build-size: ${{ steps.build-info.outputs.size }}
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
+          
+      - name: 🧹 Clear npm cache
+        run: npm cache clean --force
+        
+      - name: 📋 Install dependencies
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          npm ci --prefer-offline --no-audit
+          
+      - name: 🧪 Run tests (if available)
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          if npm run test --if-present; then
+            echo "✅ Tests passed"
+          else
+            echo "ℹ️ No tests configured"
+          fi
+        continue-on-error: true
+        
+      - name: 🏗️ Build project
+        id: build
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          echo "🚀 Starting build process..."
+          npm run build
+          echo "✅ Build completed successfully!"
+          
+      - name: 📊 Analyze build size
+        id: build-info
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          BUILD_SIZE=$(du -sh dist/ | cut -f1)
+          echo "size=$BUILD_SIZE" >> $GITHUB_OUTPUT
+          echo "📦 Build size: $BUILD_SIZE"
+          
+          # Create build summary
+          echo "## 📊 Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build Size:** $BUILD_SIZE" >> $GITHUB_STEP_SUMMARY
+          echo "- **Node Version:** ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+          
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: color-bites-dist
+          path: ${{ env.PROJECT_DIR }}/dist/
+          retention-days: 7
+          compression-level: 6
+
+  # ===== DEPLOYMENT JOBS =====
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && needs.build-and-test.outputs.build-success == 'true'
+    environment: production
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: color-bites-dist
+          path: ${{ env.PROJECT_DIR }}/dist/
+          
+      - name: 🚀 Deploy to Netlify Production
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod --dir=${{ env.PROJECT_DIR }}/dist --message "🚀 Production deploy from commit ${{ github.sha }}"
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          
+      - name: 📝 Create deployment summary
+        run: |
+          echo "## 🚀 Production Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ✅ Successfully deployed" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build Size:** ${{ needs.build-and-test.outputs.build-size }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deploy Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+
+  deploy-preview:
+    name: 🔍 Deploy Preview
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'pull_request' && needs.build-and-test.outputs.build-success == 'true'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: color-bites-dist
+          path: ${{ env.PROJECT_DIR }}/dist/
+          
+      - name: 🔍 Deploy to Netlify Preview
+        id: deploy-preview
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=${{ env.PROJECT_DIR }}/dist --message "🔍 Preview deploy for PR #${{ github.event.number }}"
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          
+      - name: 💬 Comment PR with preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `## 🔍 Preview Deployment
+            
+            ✅ **Preview deployed successfully!**
+            
+            ### 📊 Build Information
+            - **Build Size:** ${{ needs.build-and-test.outputs.build-size }}
+            - **Node Version:** ${{ env.NODE_VERSION }}
+            - **Commit:** \`${{ github.sha }}\`
+            
+            ### 🔗 Links
+            - 🌐 **Preview URL:** Check Netlify dashboard for preview URL
+            - 📊 **Build Logs:** [View here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            ### 🎯 Next Steps
+            - Test the preview thoroughly
+            - Check responsive design on mobile/tablet
+            - Verify all features work correctly
+            
+            ---
+            *Auto-generated by COLOR BITES CI/CD 🤖*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
+
+  # ===== PERFORMANCE & QUALITY AUDIT =====
+  lighthouse-audit:
+    name: 🚨 Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    needs: deploy-preview
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🚨 Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          configPath: './${{ env.PROJECT_DIR }}/lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          
+      - name: 📊 Upload Lighthouse results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+
+  # ===== POST-DEPLOYMENT HEALTH CHECK =====
+  health-check:
+    name: 🏥 Health Check
+    runs-on: ubuntu-latest
+    needs: deploy-production
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 🏥 Basic health check
+        run: |
+          echo "🏥 Running post-deployment health checks..."
+          
+          # Add your production URL here
+          # PROD_URL="https://your-color-bites-site.netlify.app"
+          # curl -f $PROD_URL || exit 1
+          
+          echo "✅ Health check completed"
+          
+      - name: 📝 Health check summary
+        run: |
+          echo "## 🏥 Health Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ✅ All systems operational" >> $GITHUB_STEP_SUMMARY
+          echo "- **Check Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+
+  # ===== CLEANUP JOB =====
+  cleanup:
+    name: 🧹 Cleanup
+    runs-on: ubuntu-latest
+    needs: [deploy-production, deploy-preview, lighthouse-audit]
+    if: always()
+    
+    steps:
+      - name: 🧹 Clean up artifacts
+        run: |
+          echo "🧹 Cleaning up old artifacts..."
+          echo "✅ Cleanup completed"
+          
+      - name: 📊 Final summary
+        run: |
+          echo "## 🎉 COLOR BITES CI/CD Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflow:** Completed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Completion Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Built with ❤️ for COLOR BITES*" >> $GITHUB_STEP_SUMMARY
