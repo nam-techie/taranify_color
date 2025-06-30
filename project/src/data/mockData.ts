@@ -328,20 +328,26 @@ export const foodPosts: FoodPost[] = [
     author: "Mai Anh",
     authorAvatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face",
     ingredients: [
-      "Bánh tráng mỏng",
-      "Tôm khô",
-      "Mắm ruốc",
-      "Trứng cút",
-      "Hành lá",
-      "Mayonnaise",
-      "Tương ớt"
+      "Bánh tráng mỏng (loại tốt nhất từ Tây Ninh)",
+      "Tôm khô Cà Mau (300g, ngâm nước ấm 30 phút)",
+      "Mắm ruốc Phan Thiết (2 muỗng canh)",
+      "Trứng cút tươi (10-15 quả)",
+      "Hành lá thái nhỏ (3 cây)",
+      "Mayonnaise Nhật Bản",
+      "Tương ớt Sriracha",
+      "Dầu ăn (1 muỗng canh)",
+      "Muối tiêu (1 chút)"
     ],
     recipe: [
-      "Nướng bánh tráng trên than hồng đến khi giòn",
-      "Phết mắm ruốc đều trên mặt bánh",
-      "Rắc tôm khô băm nhuyễn",
-      "Đập trứng cút lên trên",
-      "Cuộn bánh và chấm với tương ớt"
+      "🔥 **Chuẩn bị lửa than**: Đốt than hồng, chờ lửa đều và không có khói. Đây là bước quan trọng nhất quyết định độ giòn của bánh tráng.",
+      "🦐 **Xử lý tôm khô**: Ngâm tôm khô trong nước ấm 30 phút, vớt ra để ráo. Rang tôm khô trên chảo không dầu 3-5 phút cho thơm, sau đó băm nhuyễn.",
+      "🥚 **Chuẩn bị trứng cút**: Đập trứng cút vào bát nhỏ, thêm chút muối tiêu. Mẹo: dùng dao nhỏ cắt vỏ trứng sẽ dễ hơn.",
+      "🔥 **Nướng bánh tráng**: Đặt bánh tráng lên vỉ nướng, nướng 30-45 giây mỗi mặt đến khi bánh cong lên và có tiếng kêu lách tách.",
+      "🍤 **Phết mắm ruốc**: Dùng thìa nhỏ phết đều mắm ruốc lên mặt bánh tráng còn nóng. Lưu ý: phết mỏng để không bị mặn.",
+      "🧅 **Rắc tôm và hành**: Rắc đều tôm khô băm và hành lá thái nhỏ lên toàn bộ mặt bánh.",
+      "🥚 **Đập trứng cút**: Đập 2-3 quả trứng cút lên bánh, dùng thìa nhỏ tán đều để trứng chín đồng đều.",
+      "🌶️ **Hoàn thiện**: Nướng thêm 1-2 phút cho trứng chín. Rưới mayonnaise và tương ớt theo ý thích.",
+      "🥢 **Cuộn và thưởng thức**: Cuộn bánh tráng lại, cắt đôi và ăn ngay khi còn nóng. Chấm thêm tương ớt nếu thích cay."
     ],
     likes: 156,
     comments: [
@@ -392,31 +398,160 @@ export const foodPosts: FoodPost[] = [
       }
     ],
     tags: ["Đỏ", "Cay", "Ăn vặt", "Sài Gòn"],
-    createdAt: "2024-01-15T08:00:00Z"
+    createdAt: "2024-01-15T08:00:00Z",
+    // Thêm các trường mới
+    cookingTime: "20 phút",
+    servings: "2-3 người",
+    difficulty: "Dễ",
+    tips: [
+      "Chọn bánh tráng mỏng và giòn, tránh loại dày sẽ khó nướng đều",
+      "Than hồng phải đều và không có khói mới nướng được bánh giòn",
+      "Mắm ruốc phết mỏng thôi, quá dày sẽ bị mặn và che mất vị tôm khô",
+      "Trứng cút tươi sẽ ngon hơn trứng gà, và phải đập khi bánh còn nóng"
+    ],
+    chefLinks: [
+      {
+        name: "Gordon Ramsay - Vietnamese Street Food",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Đầu bếp nổi tiếng thế giới thử làm bánh tráng nướng Việt Nam"
+      },
+      {
+        name: "Luke Nguyen - Authentic Vietnamese Recipes",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Đầu bếp gốc Việt chia sẻ bí quyết làm bánh tráng nướng chuẩn vị"
+      }
+    ],
+    nutritionInfo: {
+      calories: 180,
+      protein: "12g",
+      carbs: "15g",
+      fat: "8g"
+    }
   },
   {
     id: 2,
+    title: "Phở Bò Truyền Thống - Hương Vị Quê Nhà",
+    description: "Tô phở với nước dùng trong vắt, thịt bò mềm ngọt và bánh phở dai dai. Màu nâu ấm áp của nước dùng mang lại cảm giác bình yên như về nhà. Mình đã mất 8 tiếng để niêu nước dùng này, nhưng kết quả thật xứng đáng! Đây là công thức gia truyền từ bà ngoại mình ở Hà Nội.",
+    image: "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg",
+    author: "Hoàng Long",
+    authorAvatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=100&h=100&fit=crop&crop=face",
+    ingredients: [
+      "Xương ống bò (2kg, chọn loại có tủy)",
+      "Xương bò nạc (1kg)",
+      "Thịt bò nạm (500g)",
+      "Thịt bò gầu (300g)",
+      "Bánh phở tươi (500g)",
+      "Hành tây to (2 củ)",
+      "Gừng già (100g)",
+      "Quế thanh (2 thanh)",
+      "Hồi (3 cái)",
+      "Đinh hương (5 cái)",
+      "Thảo quả (2 quả)",
+      "Hạt mùi (1 muỗng cà phê)",
+      "Đường phèn (2 muỗng canh)",
+      "Muối (1 muỗng canh)",
+      "Nước mắm (3 muỗng canh)",
+      "Hành lá, ngò gai, rau thơm"
+    ],
+    recipe: [
+      "🦴 **Sơ chế xương**: Ngâm xương bò trong nước lạnh 2 tiếng để loại bỏ máu. Chần xương qua nước sôi 10 phút, vớt ra rửa sạch.",
+      "🔥 **Nướng hành gừng**: Nướng hành tây và gừng trên bếp gas đến khi thơm và hơi cháy bề mặt. Gọt vỏ, rửa sạch.",
+      "🌿 **Rang gia vị**: Rang khô quế, hồi, đinh hương, thảo quả, hạt mùi trên chảo 3-5 phút cho thơm. Cho vào túi vải.",
+      "💧 **Niêu nước dùng**: Cho xương vào nồi lớn, đổ 4-5 lít nước lạnh. Đun sôi, vớt bọt liên tục 30 phút đầu.",
+      "⏰ **Niêu lâu**: Hạ lửa nhỏ, niêu 6-8 tiếng. Thêm hành gừng nướng và túi gia vị sau 2 tiếng đầu.",
+      "🥩 **Luộc thịt**: Sau 4 tiếng niêu, cho thịt bò vào luộc 45 phút. Vớt ra để nguội, thái lát mỏng.",
+      "🍜 **Nêm nếm**: Lọc nước dùng, nêm nếm với đường phèn, muối, nước mắm. Nước dùng phải trong, ngọt thanh.",
+      "🍝 **Trụng bánh phở**: Trụng bánh phở qua nước sôi 30 giây, vớt ra để ráo.",
+      "🥢 **Bày tô**: Cho bánh phở vào tô, xếp thịt bò lên trên, chan nước dùng nóng.",
+      "🌿 **Hoàn thiện**: Rắc hành lá, ngò gai. Ăn kèm rau thơm, chanh, ớt, tương đen."
+    ],
+    likes: 203,
+    comments: [
+      {
+        id: 8,
+        author: "Bảo Ngọc",
+        authorAvatar: "https://images.pexels.com/photos/1080213/pexels-photo-1080213.jpeg?w=100&h=100&fit=crop&crop=face",
+        content: "Phở nhà làm ngon nhất! Nước dùng trong vắt thế này chắc phải niêu lâu lắm 🍜",
+        likes: 18,
+        replies: [
+          {
+            id: 5,
+            author: "Hoàng Long",
+            authorAvatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=100&h=100&fit=crop&crop=face",
+            content: "Đúng rồi, mình niêu từ 5h sáng luôn! Nhưng ngon thì xứng đáng 😄",
+            likes: 12,
+            createdAt: "2024-01-12T09:15:00Z"
+          }
+        ],
+        createdAt: "2024-01-12T09:00:00Z"
+      }
+    ],
+    tags: ["Nâu", "Truyền thống", "Phở", "Comfort food"],
+    createdAt: "2024-01-12T08:00:00Z",
+    cookingTime: "8 tiếng",
+    servings: "6-8 người",
+    difficulty: "Khó",
+    tips: [
+      "Xương phải chọn loại tươi, có tủy để nước dùng ngọt và đậm đà",
+      "Niêu lửa nhỏ liên tục, không được để sôi bọt lớn sẽ làm nước dùng đục",
+      "Vớt bọt thường xuyên trong 30 phút đầu để có nước dùng trong",
+      "Gia vị rang thơm trước khi cho vào sẽ tăng hương vị đáng kể"
+    ],
+    chefLinks: [
+      {
+        name: "Andrea Nguyen - Pho Master Class",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Chuyên gia ẩm thực Việt Nam hướng dẫn làm phở chuẩn Hà Nội"
+      },
+      {
+        name: "David Chang - Vietnamese Pho Secrets",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Đầu bếp Michelin khám phá bí mật của món phở Việt Nam"
+      },
+      {
+        name: "Kenji López-Alt - Science of Pho",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Phân tích khoa học về cách làm nước dùng phở hoàn hảo"
+      }
+    ],
+    nutritionInfo: {
+      calories: 350,
+      protein: "25g",
+      carbs: "35g",
+      fat: "12g"
+    }
+  },
+  {
+    id: 3,
     title: "Salad Xanh Mát Lạnh - Thanh Lọc Cơ Thể",
-    description: "Khi cần một chút bình yên cho tâm hồn, salad xanh mát với đủ loại rau củ tươi ngon chính là lựa chọn hoàn hảo! Màu xanh của rau củ không chỉ đẹp mắt mà còn giúp tinh thần thư thái. Mình thường làm món này vào những ngày nóng nực hoặc khi cảm thấy cần detox.",
+    description: "Khi cần một chút bình yên cho tâm hồn, salad xanh mát với đủ loại rau củ tươi ngon chính là lựa chọn hoàn hảo! Màu xanh của rau củ không chỉ đẹp mắt mà còn giúp tinh thần thư thái. Mình thường làm món này vào những ngày nóng nực hoặc khi cảm thấy cần detox. Bí quyết là chọn rau tươi và dressing homemade.",
     image: "https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg",
     author: "Thanh Tú",
     authorAvatar: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?w=100&h=100&fit=crop&crop=face",
     ingredients: [
-      "Xà lách tươi",
-      "Cà chua cherry",
-      "Dưa leo",
-      "Bơ",
-      "Hạt óc chó",
-      "Phô mai feta",
-      "Dầu olive",
-      "Chanh tươi"
+      "Xà lách tươi (200g, rửa sạch, xé nhỏ)",
+      "Cà chua cherry (150g, cắt đôi)",
+      "Dưa leo (1 trái, thái lát mỏng)",
+      "Bơ chín (1 trái, thái múi)",
+      "Hạt óc chó (50g, rang thơm)",
+      "Phô mai feta (100g, vụn nhỏ)",
+      "Dầu olive extra virgin (3 muỗng canh)",
+      "Chanh tươi (2 muỗng canh)",
+      "Mật ong (1 muỗng cà phê)",
+      "Muối biển (1/2 muỗng cà phê)",
+      "Tiêu đen (1/4 muỗng cà phê)",
+      "Lá bạc hà tươi (trang trí)"
     ],
     recipe: [
-      "Rửa sạch và thái nhỏ tất cả rau củ",
-      "Xếp rau vào đĩa một cách nghệ thuật",
-      "Rắc phô mai feta và hạt óc chó",
-      "Pha nước sốt từ dầu olive và chanh",
-      "Rưới đều và thưởng thức"
+      "🥬 **Chuẩn bị rau xanh**: Rửa sạch xà lách trong nước muối loãng 10 phút, vớt ra để ráo. Xé thành miếng vừa ăn.",
+      "🍅 **Sơ chế rau củ**: Rửa cà chua cherry, cắt đôi. Gọt vỏ dưa leo, thái lát mỏng. Bơ chín thái múi vừa phải.",
+      "🌰 **Rang hạt óc chó**: Rang hạt óc chó trên chảo không dầu 3-5 phút cho thơm và giòn. Để nguội.",
+      "🧀 **Chuẩn bị phô mai**: Vụn phô mai feta thành miếng nhỏ vừa ăn.",
+      "🥗 **Trộn salad**: Cho xà lách vào bát lớn, thêm cà chua, dưa leo, bơ. Trộn nhẹ tay.",
+      "🍯 **Làm dressing**: Trộn dầu olive, nước chanh, mật ong, muối, tiêu trong bát nhỏ. Đánh đều.",
+      "🥄 **Nêm nếm**: Rưới dressing lên salad, trộn đều nhưng nhẹ tay để không làm héo rau.",
+      "🌿 **Trang trí**: Rắc hạt óc chó và phô mai feta lên trên. Trang trí với lá bạc hà.",
+      "❄️ **Làm lạnh**: Cho vào tủ lạnh 15 phút trước khi ăn để salad mát và giòn hơn."
     ],
     likes: 89,
     comments: [
@@ -449,29 +584,63 @@ export const foodPosts: FoodPost[] = [
       }
     ],
     tags: ["Xanh", "Khỏe mạnh", "Thanh lọc", "Vegetarian"],
-    createdAt: "2024-01-14T12:00:00Z"
+    createdAt: "2024-01-14T12:00:00Z",
+    cookingTime: "15 phút",
+    servings: "2-3 người",
+    difficulty: "Dễ",
+    tips: [
+      "Rau xanh phải tươi và giòn, ngâm nước đá 10 phút trước khi làm",
+      "Dressing nên làm riêng và rưới vào lúc cuối để rau không bị héo",
+      "Bơ chọn loại chín vừa, không quá mềm sẽ bị nát khi trộn",
+      "Có thể thêm hạt chia hoặc hạt lanh để tăng dinh dưỡng"
+    ],
+    chefLinks: [
+      {
+        name: "Jamie Oliver - Perfect Green Salad",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Đầu bếp nổi tiếng chia sẻ bí quyết làm salad xanh hoàn hảo"
+      },
+      {
+        name: "Yotam Ottolenghi - Mediterranean Salads",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Chuyên gia ẩm thực Địa Trung Hải và các loại salad healthy"
+      }
+    ],
+    nutritionInfo: {
+      calories: 220,
+      protein: "8g",
+      carbs: "12g",
+      fat: "18g"
+    }
   },
   {
-    id: 3,
+    id: 4,
     title: "Bánh Flan Vàng Óng - Ngọt Ngào Từng Muỗng",
-    description: "Màu vàng rực rỡ của bánh flan như mang đến niềm vui tức thì. Mềm mại, ngọt ngào - hoàn hảo cho những ngày cần một chút ngọt ngào! Bí quyết để có bánh flan mịn màng là phải lọc hỗn hợp trứng sữa thật kỹ và hấp bằng lửa nhỏ.",
+    description: "Màu vàng rực rỡ của bánh flan như mang đến niềm vui tức thì. Mềm mại, ngọt ngào - hoàn hảo cho những ngày cần một chút ngọt ngào! Bí quyết để có bánh flan mịn màng là phải lọc hỗn hợp trứng sữa thật kỹ và hấp bằng lửa nhỏ. Đây là công thức mình học từ một đầu bếp bánh ngọt Pháp.",
     image: "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg",
     author: "Phương Linh",
     authorAvatar: "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?w=100&h=100&fit=crop&crop=face",
     ingredients: [
-      "Trứng gà",
-      "Sữa tươi",
-      "Đường trắng",
-      "Vanilla",
-      "Caramel",
-      "Một chút muối"
+      "Trứng gà tươi (6 quả, chỉ lấy lòng đỏ)",
+      "Trứng gà nguyên quả (2 quả)",
+      "Sữa tươi không đường (500ml)",
+      "Đường trắng (100g cho custard)",
+      "Đường trắng (150g cho caramel)",
+      "Vanilla extract (1 muỗng cà phê)",
+      "Nước lọc (3 muỗng canh)",
+      "Muối (1 nhúm nhỏ)"
     ],
     recipe: [
-      "Đánh đều trứng với sữa và đường",
-      "Thêm vanilla và lọc qua rây",
-      "Nấu caramel vàng óng cho đáy khuôn",
-      "Đổ hỗn hợp trứng vào khuôn",
-      "Hấp 30 phút và để nguội"
+      "🍯 **Nấu caramel**: Cho 150g đường và 3 muỗng canh nước vào chảo. Nấu lửa vừa đến khi đường tan và chuyển màu vàng hổ phách.",
+      "🥄 **Đổ caramel**: Nhanh tay đổ caramel vào đáy khuôn, xoay đều để caramel phủ khắp đáy. Để nguội.",
+      "🥛 **Đun sữa**: Đun sữa tươi với 1 nhúm muối đến khi sắp sôi (có bọt nhỏ ở mép). Tắt bếp, để nguội.",
+      "🥚 **Đánh trứng**: Đánh nhẹ 6 lòng đỏ + 2 trứng nguyên quả với 100g đường đến khi đường tan. Không đánh tạo bọt.",
+      "🌟 **Pha hỗn hợp**: Từ từ đổ sữa nguội vào hỗn hợp trứng, vừa đổ vừa khuấy đều. Thêm vanilla.",
+      "🔍 **Lọc hỗn hợp**: Lọc hỗn hợp qua rây mịn 2-3 lần để loại bỏ bọt khí và cặn.",
+      "🥄 **Đổ vào khuôn**: Từ từ đổ hỗn hợp vào khuôn đã có caramel, tránh tạo bọt.",
+      "♨️ **Hấp bánh**: Hấp cách thủy 25-30 phút lửa nhỏ. Kiểm tra bằng tăm, ra sạch là chín.",
+      "❄️ **Làm lạnh**: Để nguội hoàn toàn, cho vào tủ lạnh ít nhất 4 tiếng trước khi ăn.",
+      "🍽️ **Lật bánh**: Dùng dao mỏng rạch quanh mép, lật ngược khuôn ra đĩa."
     ],
     likes: 124,
     comments: [
@@ -504,79 +673,65 @@ export const foodPosts: FoodPost[] = [
       }
     ],
     tags: ["Vàng", "Ngọt", "Dessert", "Homemade"],
-    createdAt: "2024-01-13T18:00:00Z"
-  },
-  {
-    id: 4,
-    title: "Phở Bò Truyền Thống - Hương Vị Quê Nhà",
-    description: "Tô phở với nước dùng trong vắt, thịt bò mềm ngọt và bánh phở dai dai. Màu nâu ấm áp của nước dùng mang lại cảm giác bình yên như về nhà. Mình đã mất 3 tiếng để niêu nước dùng này, nhưng kết quả thật xứng đáng!",
-    image: "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg",
-    author: "Hoàng Long",
-    authorAvatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=100&h=100&fit=crop&crop=face",
-    ingredients: [
-      "Xương bò",
-      "Thịt bò",
-      "Bánh phở",
-      "Hành tây",
-      "Gừng",
-      "Quế",
-      "Hồi",
-      "Rau thơm"
+    createdAt: "2024-01-13T18:00:00Z",
+    cookingTime: "1 tiếng",
+    servings: "6-8 người",
+    difficulty: "Trung bình",
+    tips: [
+      "Caramel phải nấu đúng độ, quá đậm sẽ đắng, quá nhạt sẽ không thơm",
+      "Lọc hỗn hợp trứng sữa nhiều lần để bánh mịn và không bị lỗ",
+      "Hấp lửa nhỏ và đều, lửa to sẽ làm bánh bị lỗ và thô",
+      "Để bánh nguội hoàn toàn trước khi cho vào tủ lạnh"
     ],
-    recipe: [
-      "Niêu xương bò trong 3-4 tiếng",
-      "Nướng hành tây, gừng thơm",
-      "Cho gia vị vào nước dùng",
-      "Trụng bánh phở qua nước sôi",
-      "Bày thịt bò, rau thơm lên tô"
-    ],
-    likes: 203,
-    comments: [
+    chefLinks: [
       {
-        id: 8,
-        author: "Bảo Ngọc",
-        authorAvatar: "https://images.pexels.com/photos/1080213/pexels-photo-1080213.jpeg?w=100&h=100&fit=crop&crop=face",
-        content: "Phở nhà làm ngon nhất! Nước dùng trong vắt thế này chắc phải niêu lâu lắm 🍜",
-        likes: 18,
-        replies: [
-          {
-            id: 5,
-            author: "Hoàng Long",
-            authorAvatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=100&h=100&fit=crop&crop=face",
-            content: "Đúng rồi, mình niêu từ 5h sáng luôn! Nhưng ngon thì xứng đáng 😄",
-            likes: 12,
-            createdAt: "2024-01-12T09:15:00Z"
-          }
-        ],
-        createdAt: "2024-01-12T09:00:00Z"
+        name: "Julia Child - Classic French Flan",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Đầu bếp huyền thoại hướng dẫn làm flan kiểu Pháp cổ điển"
+      },
+      {
+        name: "Dominique Ansel - Perfect Crème Caramel",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Đầu bếp bánh ngọt nổi tiếng chia sẻ bí quyết làm flan hoàn hảo"
       }
     ],
-    tags: ["Nâu", "Truyền thống", "Phở", "Comfort food"],
-    createdAt: "2024-01-12T08:00:00Z"
+    nutritionInfo: {
+      calories: 280,
+      protein: "8g",
+      carbs: "35g",
+      fat: "12g"
+    }
   },
   {
     id: 5,
     title: "Smoothie Bowl Cầu Vồng - Năng Lượng Tích Cực",
-    description: "Khi muốn bắt đầu ngày mới với năng lượng tích cực, smoothie bowl đầy màu sắc này chính là lựa chọn hoàn hảo! Mỗi màu sắc đại diện cho một loại trái cây khác nhau, vừa ngon vừa bổ dưỡng.",
+    description: "Khi muốn bắt đầu ngày mới với năng lượng tích cực, smoothie bowl đầy màu sắc này chính là lựa chọn hoàn hảo! Mỗi màu sắc đại diện cho một loại trái cây khác nhau, vừa ngon vừa bổ dưỡng. Đây là món ăn sáng yêu thích của mình, đặc biệt vào những ngày cần động lực.",
     image: "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg",
     author: "Kim Ngân",
     authorAvatar: "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?w=100&h=100&fit=crop&crop=face",
     ingredients: [
-      "Chuối",
-      "Dâu tây",
-      "Xoài",
-      "Việt quất",
-      "Granola",
-      "Hạt chia",
-      "Dừa nạo",
-      "Mật ong"
+      "Chuối chín (2 trái, đông lạnh)",
+      "Dâu tây tươi (100g)",
+      "Xoài chín (1 trái)",
+      "Việt quất (50g)",
+      "Granola homemade (50g)",
+      "Hạt chia (1 muỗng canh)",
+      "Dừa nạo (2 muỗng canh)",
+      "Mật ong (1 muỗng canh)",
+      "Sữa dừa (100ml)",
+      "Hạt óc chó (30g)",
+      "Bạc hà tươi (trang trí)"
     ],
     recipe: [
-      "Xay chuối với một ít sữa dừa",
-      "Đổ vào bowl làm base",
-      "Sắp xếp trái cây theo màu sắc",
-      "Rắc granola và hạt chia",
-      "Trang trí với dừa nạo"
+      "🍌 **Chuẩn bị base**: Xay chuối đông lạnh với sữa dừa đến khi mịn và đặc như kem.",
+      "🥣 **Đổ vào bowl**: Đổ hỗn hợp chuối vào bowl sâu, dàn đều bề mặt.",
+      "🍓 **Sắp xếp trái cây**: Thái dâu tây, xoài thành lát mỏng. Sắp xếp theo màu sắc tạo cầu vồng.",
+      "🫐 **Thêm việt quất**: Rắc việt quất xanh tím lên một góc bowl.",
+      "🥜 **Rắc granola**: Rắc granola và hạt óc chó lên bề mặt.",
+      "🌰 **Thêm hạt chia**: Rắc hạt chia đều khắp bowl.",
+      "🥥 **Trang trí dừa**: Rắc dừa nạo tạo điểm nhấn trắng.",
+      "🍯 **Rưới mật ong**: Rưới mật ong theo đường zigzag.",
+      "🌿 **Hoàn thiện**: Trang trí với lá bạc hà tươi và ăn ngay."
     ],
     likes: 167,
     comments: [
@@ -591,7 +746,34 @@ export const foodPosts: FoodPost[] = [
       }
     ],
     tags: ["Nhiều màu", "Healthy", "Breakfast", "Smoothie"],
-    createdAt: "2024-01-11T07:00:00Z"
+    createdAt: "2024-01-11T07:00:00Z",
+    cookingTime: "10 phút",
+    servings: "1 người",
+    difficulty: "Dễ",
+    tips: [
+      "Chuối đông lạnh sẽ tạo độ đặc và mát cho smoothie bowl",
+      "Sắp xếp topping theo màu sắc để tạo hiệu ứng cầu vồng đẹp mắt",
+      "Ăn ngay sau khi làm để giữ độ tươi và mát của trái cây",
+      "Có thể thay đổi trái cây theo mùa và sở thích cá nhân"
+    ],
+    chefLinks: [
+      {
+        name: "Ella Mills - Deliciously Ella Smoothie Bowls",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Chuyên gia healthy food chia sẻ cách làm smoothie bowl đẹp mắt"
+      },
+      {
+        name: "Minimalist Baker - Rainbow Smoothie Bowl",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        description: "Công thức smoothie bowl cầu vồng với nguyên liệu đơn giản"
+      }
+    ],
+    nutritionInfo: {
+      calories: 320,
+      protein: "8g",
+      carbs: "45g",
+      fat: "14g"
+    }
   }
 ];
 

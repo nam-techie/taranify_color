@@ -81,6 +81,26 @@ export interface FoodPost {
   comments: Comment[];
   tags: string[];
   createdAt: string;
+  // Thêm các trường mới
+  cookingTime?: string;
+  servings?: string;
+  difficulty?: string;
+  tips?: string[];
+  chefLinks?: ChefLink[];
+  nutritionInfo?: NutritionInfo;
+}
+
+export interface ChefLink {
+  name: string;
+  url: string;
+  description: string;
+}
+
+export interface NutritionInfo {
+  calories: number;
+  protein: string;
+  carbs: string;
+  fat: string;
 }
 
 export interface Comment {
