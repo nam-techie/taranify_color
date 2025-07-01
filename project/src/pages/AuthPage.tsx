@@ -293,20 +293,6 @@ const AuthPage: React.FC = () => {
         </div>
 
         <div className="glass-card rounded-2xl p-8">
-          {/* Demo Account Info - Only show for login */}
-          {isLogin && (
-            <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
-              <div className="flex items-start space-x-2">
-                <User size={16} className="text-blue-400 mt-0.5" />
-                <div className="text-sm">
-                  <div className="text-blue-300 font-medium mb-1">Tài khoản demo:</div>
-                  <div className="text-blue-200">Email: test@gmail.com</div>
-                  <div className="text-blue-200">Mật khẩu: 123456</div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {error && (
             <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
               <div className="flex items-center space-x-2">
