@@ -1,0 +1,47 @@
+name: Build & TypeScript Check
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'project/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'project/**'
+
+jobs:
+  build-and-check:
+    name:  Build & Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name:  Checkout code
+        uses: actions/checkout@v4
+        
+      - name:  Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: project/package-lock.json
+          
+      - name:  Install dependencies
+        run: |
+          cd project
+          npm ci
+          
+      - name:  TypeScript check
+        run: |
+          cd project
+          npx tsc --noEmit
+          
+      - name:  Build project
+        run: |
+          cd project
+          npm run build
+          
+      - name:  Build success
+        run: |
+          echo " Build completed successfully!"
+          echo " Build artifacts ready in project/dist/"
