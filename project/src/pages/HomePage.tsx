@@ -15,8 +15,6 @@ import {
   TrendingUp,
   Award,
   ChevronRight,
-  Play,
-  Palette,
   Crown
 } from 'lucide-react';
 

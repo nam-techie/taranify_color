@@ -3,18 +3,13 @@ import {
   DollarSign, 
   TrendingUp, 
   TrendingDown, 
-  Calendar, 
-  PieChart, 
   Plus,
   Coffee,
   Utensils,
   ShoppingBag,
   MapPin,
-  Filter,
-  Download,
   Target,
   AlertCircle,
-  CheckCircle
 } from 'lucide-react';
 
 interface Expense {
@@ -40,7 +35,7 @@ interface Budget {
 }
 
 const ExpenseTracker: React.FC = () => {
-  const [expenses, setExpenses] = useState<Expense[]>([
+  const [expenses] = useState<Expense[]>([
     {
       id: '1',
       amount: 45000,
@@ -79,7 +74,7 @@ const ExpenseTracker: React.FC = () => {
     }
   ]);
 
-  const [budget, setBudget] = useState<Budget>({
+  const [budget] = useState<Budget>({
     monthly: 3000000,
     daily: 100000,
     categories: {

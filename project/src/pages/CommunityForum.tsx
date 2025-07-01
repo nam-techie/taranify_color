@@ -5,11 +5,8 @@ import {
   Heart, 
   MessageCircle, 
   Share2, 
-  Camera,
   Filter,
   Search,
-  Send,
-  ThumbsUp,
   Crown,
   Video,
   FileText,
@@ -18,14 +15,11 @@ import {
   Users as UsersIcon,
   X,
   Eye,
-  Star,
-  Play,
-  ExternalLink,
   Award,
-  Sparkles,
   TrendingUp,
   Bookmark,
-  MoreHorizontal
+  MoreHorizontal,
+  Camera,
 } from 'lucide-react';
 import { foodPosts } from '../data/mockData';
 import { FoodPost, Comment } from '../types';
@@ -87,53 +81,12 @@ const CommunityForum: React.FC = () => {
     );
   };
 
-  const handleCommentLike = (postId: number, commentId: number) => {
-    setPosts(prevPosts =>
-      prevPosts.map(post =>
-        post.id === postId
-          ? {
-              ...post,
-              comments: post.comments.map(comment =>
-                comment.id === commentId
-                  ? { ...comment, likes: comment.likes + 1 }
-                  : comment
-              )
-            }
-          : post
-      )
-    );
-  };
-
   const toggleComments = (postId: number) => {
     setExpandedComments(prev =>
       prev.includes(postId)
         ? prev.filter(id => id !== postId)
         : [...prev, postId]
     );
-  };
-
-  const handleAddComment = (postId: number) => {
-    if (!newComment[postId]?.trim()) return;
-
-    const comment: Comment = {
-      id: Date.now(),
-      author: user?.name || "Bạn",
-      authorAvatar: user?.avatar || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=100&h=100&fit=crop&crop=face",
-      content: newComment[postId],
-      likes: 0,
-      replies: [],
-      createdAt: new Date().toISOString()
-    };
-
-    setPosts(prevPosts =>
-      prevPosts.map(post =>
-        post.id === postId
-          ? { ...post, comments: [...post.comments, comment] }
-          : post
-      )
-    );
-
-    setNewComment(prev => ({ ...prev, [postId]: '' }));
   };
 
   const getUserBadge = (authorName: string) => {

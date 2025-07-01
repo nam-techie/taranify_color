@@ -18,7 +18,6 @@ import {
   Sun,
   Moon,
   Route,
-  Plus,
   X
 } from 'lucide-react';
 import { travelLocations } from '../data/mockData';

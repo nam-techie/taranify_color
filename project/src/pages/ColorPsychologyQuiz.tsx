@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Brain, RefreshCw, Share2, CheckCircle, ArrowRight, Play, ExternalLink, ShoppingCart, Navigation, ArrowLeft, Music, Film, Tv, BookOpen, Utensils, BarChart3, ChevronLeft, ChevronRight, Sparkles, Heart, Plus } from 'lucide-react';
+import { BarChart3, Music, Film, Tv, BookOpen, Utensils, Brain, CheckCircle, RefreshCw, ArrowRight, Heart, Navigation, Play, ShoppingCart, ExternalLink, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 
 interface QuizType {
   id: string;
