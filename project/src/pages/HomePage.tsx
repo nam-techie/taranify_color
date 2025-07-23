@@ -129,80 +129,80 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen flex items-center justify-center px-2 sm:px-6 lg:px-8 pt-8 pb-8 sm:pt-0 sm:pb-0">
         <div className="max-w-6xl mx-auto text-center">
           {/* Floating Logo */}
-          <div className="animate-bounce-subtle mb-8">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-button rounded-3xl shadow-glow-lg relative">
-              <Utensils size={48} className="text-white" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
-                <Sparkles size={16} className="text-yellow-900" />
+          <div className="animate-bounce-subtle mb-6 sm:mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 bg-gradient-button rounded-2xl sm:rounded-3xl shadow-glow-lg relative">
+              <Utensils size={40} className="text-white sm:w-12 sm:h-12" />
+              <div className="absolute -top-2 -right-2 w-7 h-7 sm:w-8 sm:h-8 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                <Sparkles size={14} className="text-yellow-900 sm:w-4 sm:h-4" />
               </div>
             </div>
           </div>
           
           {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 mb-8 animate-slide-up">
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 animate-slide-up text-xs sm:text-sm">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <Star size={16} className="text-yellow-400" />
-            <span className="text-white/80 text-sm font-medium">Được tin tưởng bởi 1,250+ người dùng</span>
-            <TrendingUp size={16} className="text-green-400" />
+            <Star size={14} className="text-yellow-400 sm:w-4 sm:h-4" />
+            <span className="text-white/80 font-medium">Được tin tưởng bởi 1,250+ người dùng</span>
+            <TrendingUp size={14} className="text-green-400 sm:w-4 sm:h-4" />
           </div>
           
           {/* Main Title with Gradient Animation */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 animate-slide-up">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 animate-slide-up">
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 bg-clip-text text-transparent animate-gradient-x">
               COLOR BITES
             </span>
           </h1>
           
           {/* Subtitle */}
-          <p className="text-xl md:text-3xl text-white/90 mb-6 animate-slide-up font-light">
+          <p className="text-base sm:text-xl md:text-3xl text-white/90 mb-4 sm:mb-6 animate-slide-up font-light">
             Khám phá thế giới ẩm thực qua lăng kính 
             <span className="text-gradient font-semibold"> tâm lý học màu sắc</span>
           </p>
           
-          <p className="text-lg text-white/70 mb-12 max-w-3xl mx-auto animate-slide-up leading-relaxed">
+          <p className="text-sm sm:text-lg text-white/70 mb-8 sm:mb-12 max-w-xs sm:max-w-3xl mx-auto animate-slide-up leading-relaxed">
             Tìm hiểu cảm xúc của bạn, khám phá món ăn phù hợp và kết nối với cộng đồng ẩm thực tại Thủ Đức, TP.HCM
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-slide-up w-full max-w-xs sm:max-w-none mx-auto">
             <Link
               to="/quiz"
-              className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-4 px-8 rounded-2xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+              className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 text-base sm:text-lg"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative flex items-center space-x-3">
-                <Sparkles size={24} />
-                <span className="text-lg">Bắt Đầu Trắc Nghiệm</span>
-                <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+              <div className="relative flex items-center space-x-2 sm:space-x-3">
+                <Sparkles size={20} />
+                <span>Bắt Đầu Trắc Nghiệm</span>
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
             
             <Link
               to="/community"
-              className="group bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold py-4 px-8 rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
+              className="group bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-base sm:text-lg"
             >
-              <div className="flex items-center space-x-3">
-                <Users size={24} />
-                <span className="text-lg">Khám Phá Cộng Đồng</span>
-                <ChevronRight size={24} className="group-hover:translate-x-1 transition-transform" />
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <Users size={20} />
+                <span>Khám Phá Cộng Đồng</span>
+                <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 animate-slide-up">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mt-10 sm:mt-16 animate-slide-up">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
                 <div key={index} className="text-center group">
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 ${stat.color} bg-white/10 group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon size={24} />
+                  <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-2 sm:mb-3 ${stat.color} bg-white/10 group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon size={20} />
                   </div>
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.number}</div>
-                  <div className="text-sm text-white/60">{stat.label}</div>
+                  <div className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-0.5 sm:mb-1">{stat.number}</div>
+                  <div className="text-xs sm:text-sm text-white/60">{stat.label}</div>
                 </div>
               );
             })}
@@ -211,61 +211,61 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-24 px-2 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-purple-500/20 text-purple-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Zap size={16} />
+          <div className="text-center mb-10 sm:mb-16">
+            <div className="inline-flex items-center space-x-2 bg-purple-500/20 text-purple-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              <Zap size={14} />
               <span>Tính năng nổi bật</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6">
               Trải Nghiệm Đặc Biệt
             </h2>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+            <p className="text-base sm:text-xl text-white/70 max-w-xs sm:max-w-3xl mx-auto">
               COLOR BITES mang đến cho bạn những trải nghiệm độc đáo kết hợp giữa AI, tâm lý học và ẩm thực
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <Link
                   key={index}
                   to={feature.link}
-                  className="group relative overflow-hidden glass-card rounded-3xl p-8 card-hover"
+                  className="group relative overflow-hidden glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-8 card-hover"
                 >
                   {/* Background Gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
                   
                   {/* Badge */}
-                  <div className="absolute top-6 right-6">
-                    <span className="bg-white/10 text-white text-xs px-3 py-1 rounded-full font-medium">
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+                    <span className="bg-white/10 text-white text-xs px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">
                       {feature.badge}
                     </span>
                   </div>
 
                   {/* Icon */}
-                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-glow`}>
-                    <Icon size={32} className="text-white" />
+                  <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${feature.color} rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-glow`}>
+                    <Icon size={24} className="text-white sm:w-8 sm:h-8" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-gradient transition-colors duration-300">
+                  <h3 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-4 group-hover:text-gradient transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-white/70 leading-relaxed mb-6">
+                  <p className="text-white/70 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">
                     {feature.description}
                   </p>
 
                   {/* Stats */}
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-primary-400">
+                    <span className="text-xs sm:text-sm font-medium text-primary-400">
                       {feature.stats}
                     </span>
-                    <div className="flex items-center space-x-2 text-primary-400 group-hover:text-primary-300 transition-colors">
-                      <span className="text-sm font-medium">Khám phá</span>
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-primary-400 group-hover:text-primary-300 transition-colors">
+                      <span className="text-xs sm:text-sm font-medium">Khám phá</span>
+                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>
@@ -276,40 +276,40 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-24 px-2 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-green-500/20 text-green-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Award size={16} />
+          <div className="text-center mb-10 sm:mb-16">
+            <div className="inline-flex items-center space-x-2 bg-green-500/20 text-green-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              <Award size={14} />
               <span>Phản hồi từ người dùng</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6">
               Được Yêu Thích Bởi Cộng Đồng
             </h2>
           </div>
 
           {/* Testimonial Carousel */}
           <div className="relative">
-            <div className="glass-card rounded-3xl p-8 md:p-12 text-center">
-              <div className="flex items-center justify-center space-x-1 mb-6">
+            <div className="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-12 text-center">
+              <div className="flex items-center justify-center space-x-1 mb-4 sm:mb-6">
                 {renderStars(testimonials[currentTestimonial].rating)}
               </div>
               
-              <blockquote className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+              <blockquote className="text-base sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 leading-relaxed">
                 "{testimonials[currentTestimonial].content}"
               </blockquote>
               
-              <div className="flex items-center justify-center space-x-4">
+              <div className="flex items-center justify-center space-x-3 sm:space-x-4">
                 <img
                   src={testimonials[currentTestimonial].avatar}
                   alt={testimonials[currentTestimonial].name}
-                  className="w-16 h-16 rounded-full object-cover"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
                 />
                 <div className="text-left">
-                  <div className="font-semibold text-white text-lg">
+                  <div className="font-semibold text-white text-base sm:text-lg">
                     {testimonials[currentTestimonial].name}
                   </div>
-                  <div className="text-white/60">
+                  <div className="text-white/60 text-xs sm:text-sm">
                     {testimonials[currentTestimonial].role}
                   </div>
                 </div>
@@ -317,16 +317,17 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Dots Indicator */}
-            <div className="flex justify-center space-x-2 mt-8">
+            <div className="flex justify-center space-x-1 sm:space-x-2 mt-6 sm:mt-8">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                     index === currentTestimonial 
-                      ? 'bg-primary-500 scale-125' 
+                      ? 'bg-primary-500 scale-110 sm:scale-125' 
                       : 'bg-white/30 hover:bg-white/50'
                   }`}
+                  aria-label={`Chọn testimonial ${index + 1}`}
                 />
               ))}
             </div>
@@ -335,45 +336,45 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-24 px-2 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="glass-card rounded-3xl p-12 relative overflow-hidden">
+          <div className="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-12 relative overflow-hidden">
             {/* Background Animation */}
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10"></div>
             
             <div className="relative">
-              <div className="inline-flex items-center space-x-2 bg-yellow-500/20 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                <Crown size={16} />
+              <div className="inline-flex items-center space-x-2 bg-yellow-500/20 text-yellow-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+                <Crown size={14} />
                 <span>Bắt đầu ngay hôm nay</span>
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6">
                 Sẵn Sàng Khám Phá?
               </h2>
-              <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
+              <p className="text-base sm:text-xl text-white/70 mb-6 sm:mb-8 max-w-xs sm:max-w-2xl mx-auto">
                 Tham gia cùng chúng tôi để khám phá thế giới ẩm thực đầy màu sắc và cảm xúc
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full max-w-xs sm:max-w-none mx-auto">
                 <Link
                   to="/quiz"
-                  className="group bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-4 px-8 rounded-2xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+                  className="group bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 text-base sm:text-lg"
                 >
-                  <div className="flex items-center space-x-3">
-                    <Sparkles size={24} />
-                    <span className="text-lg">Bắt Đầu Hành Trình</span>
-                    <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <Sparkles size={20} />
+                    <span>Bắt Đầu Hành Trình</span>
+                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
                 
                 <Link
                   to="/pricing"
-                  className="group bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold py-4 px-8 rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
+                  className="group bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-base sm:text-lg"
                 >
-                  <div className="flex items-center space-x-3">
-                    <Crown size={24} />
-                    <span className="text-lg">Xem Gói Premium</span>
-                    <ChevronRight size={24} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <Crown size={20} />
+                    <span>Xem Gói Premium</span>
+                    <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
               </div>

@@ -81,20 +81,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="min-h-screen bg-gradient-main">
       {/* Header */}
       <header className="glass sticky top-0 z-50 border-b border-white/10">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+        <nav className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center h-16 min-h-[56px] sm:min-h-[64px]">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-gradient-button rounded-lg flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
-                <span className="text-white font-bold text-lg">CB</span>
+            <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-button rounded-lg flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <span className="text-white font-bold text-base sm:text-lg">CB</span>
               </div>
-              <span className="text-2xl font-bold text-gradient group-hover:scale-105 transition-transform duration-300">
+              <span className="text-xl sm:text-2xl font-bold text-gradient group-hover:scale-105 transition-transform duration-300">
                 COLOR BITES
               </span>
             </Link>
-
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-2">
+            <div className="hidden lg:flex items-center space-x-1 sm:space-x-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
@@ -122,15 +121,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 );
               })}
             </div>
-
             {/* Mobile Menu Button */}
             <button
               onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="lg:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              aria-label="Mở menu"
             >
               {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
             </button>
-
             {/* Auth Section */}
             <div className="hidden lg:flex items-center">
               {isAuthenticated && user ? (
@@ -266,11 +264,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           </div>
         </nav>
-
         {/* Mobile Navigation Menu */}
         {showMobileMenu && (
-          <div className="lg:hidden border-t border-white/10 bg-gray-900/95 backdrop-blur-xl">
-            <div className="px-4 py-4 space-y-2">
+          <div className="lg:hidden border-t border-white/10 bg-gray-900/95 backdrop-blur-xl w-full fixed top-16 left-0 z-40 animate-slide-up min-h-[calc(100vh-64px)] overflow-y-auto">
+            <div className="px-2 py-4 space-y-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
@@ -279,10 +276,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     key={item.path}
                     to={item.path}
                     onClick={() => setShowMobileMenu(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+                    className={`flex items-center space-x-3 px-3 py-3 rounded-xl transition-all text-base font-medium ${
                       isActive
                         ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     <Icon size={20} />
@@ -293,14 +290,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </Link>
                 );
               })}
-              
               {/* Mobile Auth */}
               {!isAuthenticated && (
                 <div className="pt-4 border-t border-white/10 space-y-2">
                   <Link
                     to="/auth?mode=login"
                     onClick={() => setShowMobileMenu(false)}
-                    className="flex items-center space-x-2 w-full bg-gradient-button text-white px-4 py-3 rounded-xl font-medium"
+                    className="flex items-center space-x-2 w-full bg-gradient-button text-white px-3 py-3 rounded-xl font-medium text-base"
                   >
                     <User size={18} />
                     <span>Đăng Nhập</span>
@@ -308,7 +304,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <Link
                     to="/auth?mode=register"
                     onClick={() => setShowMobileMenu(false)}
-                    className="flex items-center space-x-2 w-full border-2 border-primary-500/50 text-white px-4 py-3 rounded-xl font-medium"
+                    className="flex items-center space-x-2 w-full border-2 border-primary-500/50 text-white px-3 py-3 rounded-xl font-medium text-base"
                   >
                     <UserPlus size={18} />
                     <span>Đăng Ký</span>
@@ -321,14 +317,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
 
       {/* Main Content */}
-      <main className="animate-fade-in">
+      <main className="animate-fade-in px-2 sm:px-4 pt-2 pb-4 min-h-[calc(100vh-120px)]">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="bg-dark-900/50 backdrop-blur-md border-t border-white/10 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <footer className="bg-dark-900/50 backdrop-blur-md border-t border-white/10 text-white text-sm sm:text-base">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-8 sm:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-10 h-10 bg-gradient-button rounded-lg flex items-center justify-center shadow-glow">
@@ -375,8 +371,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           </div>
 
-          <div className="border-t border-white/10 mt-8 pt-8 text-center">
-            <p className="text-white/60 leading-relaxed">
+          <div className="border-t border-white/10 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
+            <p className="text-white/60 leading-relaxed text-xs sm:text-sm">
               © 2024 COLOR BITES. Tất cả quyền được bảo lưu. 
               <br className="sm:hidden" />
               Made with ❤️ in Thủ Đức, TP.HCM
